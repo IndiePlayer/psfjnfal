@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Sobres - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --money-green: #2ecc71;
+      --money-dark: #27ae60;
+    }
+
+    .header-sobres {
+      background: var(--money-green);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--money-dark);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .cash-form {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .input-box {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-box label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--fuel-dark);
+    }
+
+    .input-money {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      text-align: center;
+      color: var(--money-dark);
+      background: #f9fffb;
+    }
+
+    .input-money:focus {
+      border-color: var(--money-green);
+      outline: none;
+    }
+
+    .btn-deposit {
+      width: 100%;
+      background: var(--money-dark);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s;
+    }
+
+    .btn-deposit:hover { background: #219150; }
+
+    .recent-deposits {
+      margin-top: 2rem;
+    }
+
+    .deposit-item {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid var(--money-green);
+      font-size: 0.9rem;
+    }
+
+    .deposit-item strong { font-size: 1.1rem; }
+    .deposit-time { color: #888; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <div class="header-sobres">
+    <h1><i class="fas fa-envelope-open-dollar"></i> Entrega de Efectivo</h1>
+    <p>Registro de Sobres a Tómbola</p>
+  </div>
+
+  <div class="container">
+    <div class="security-warning" style="margin-bottom: 1.5rem;">
+      <strong>Seguridad Bancaria:</strong> Al confirmar este registro, usted declara haber depositado físicamente el sobre en la caja fuerte. El uso de esta plataforma está protegido por la Ley 1581 de 2012.
+    </div>
+
+    <form class="cash-form" id="form-sobres">
+      <div class="input-box">
+        <label>Número de Sobre:</label>
+        <input type="text" placeholder="Ej: 10254" class="input-reading" required style="text-align: center;">
+      </div>
+
+      <div class="input-box">
+        <label>Valor en Efectivo ($):</label>
+        <input type="number" class="input-money" placeholder="0.000" required>
+      </div>
+
+      <div class="input-box">
+        <label>Billetes (Opcional):</label>
+        <textarea class="input-reading" placeholder="Ej: 10 de 50k, 5 de 20k..." rows="2" style="font-size: 0.9rem;"></textarea>
+      </div>
+
+      <button type="submit" class="btn-deposit">
+        <i class="fas fa-lock"></i> REGISTRAR DEPÓSITO
+      </button>
+    </form>
+
+    <div class="recent-deposits">
+      <h3 style="color: var(--fuel-dark); margin-bottom: 1rem;">Entregas del Turno</h3>
+      <div id="lista-sobres">
+        <div class="deposit-item">
+          <div>
+            <span class="deposit-time">Hace 2 horas</span><br>
+            <strong>$ 850,000</strong>
+          </div>
+          <span style="color: #666;">Sobre #10252</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem;">
+      <a href="inicio_gasolinera.html" style="color: #666; text-decoration: none;">
+        <i class="fas fa-chevron-left"></i> Volver a la Isla
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('form-sobres').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const monto = document.querySelector('.input-money').value;
+      alert(`Sobre registrado correctamente por valor de $${monto}. Por favor deposite el sobre inmediatamente en la tómbola.`);
+      window.location.href = 'inicio_gasolinera.html';
+    });
+  </script>
+</body>
+</html>

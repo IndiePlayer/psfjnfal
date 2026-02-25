@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad y EPP - Cervasa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        :root {
+            --safety-orange: #d35400;
+            --safety-bg: #fdf2e9;
+        }
+
+        .header-safety {
+            background: var(--safety-orange);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid #a04000;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .safety-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .safety-section h2 {
+            color: var(--safety-orange);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom:1px solid var(--safety-bg);
+            padding-bottom: 0.5rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f9f9f9;
+            cursor: pointer;
+        }
+        
+        .check-item:last-child {border-bottom: none;}
+
+        .checkbox-container {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+        }
+
+        .checkbox-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkmark {
+            position:absolute;
+            top: 0;
+            left: 0;
+            height: 24px;
+            width: 24px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--safety-orange);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .item-label { font-size: 0.95rem; color: #333;}
+
+        .btn-safety {
+            width: 100%;
+            background: var(--safety-orange) ;
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor:pointer;
+            margin-top: 1rem;
+            }
+
+            .btn-safety:hover {background: #a04000;}
+    </style>
+</head>
+<body>
+    <div class="header-safety">
+        <h1><i class="fas fa-hard-hat"></i>Seguridad Industrial</h1>
+        <p>Checklist de Inicio de Turno</p>
+    </div>
+
+    <div class="container">
+    <div class="security-warning" style="margin-bottom: 1.5rem;">
+        <strong>Seguridad y Salud:</strong> El uso de los EPP es obligatorio segun el Sistema de gestion de seguridad y salud en el trabajo (SG-SST). Omitir este registro puede invalidad coberturas de la ARL en caso de accidente.
+    </div>
+
+    <form id="safety-form">
+        <div class="safety-section">
+            <h2><i class="fas fa-user-shield"></i> Elementos de Proteccion (EPP)</h2>
+            <label class="check-item">
+                <div class="checkbox-container">
+                <input type="checkbox" required>
+                 <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Uniforme completo (Antiestatico)</span>
+            </label>
+
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="item-label">Botas de seguridad con punta de acero </span>
+                </div>
+            </label>
+
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Carnet de identificacion visible</span>
+            </label>
+        </div>
+
+        <div class="safety-section">
+            <h2><i class="fas fa-fire-extinguisher"></i> Equipos de emergencia</h2>
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Extintores de isla (Presión OK y Vigentes)</span>
+            </label>
+
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Kit de derrames completo (Arena/Absorbente)</span>
+            </label>
+
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Botón de parada de emergencia (Visualmente libre)</span>
+            </label>
+        </div>
+
+        <div class="safety-section">
+            <h2><i class="fas fa-road"></i> Estado de la Pista</h2>
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Pista libre de manchas de aceite/combustible</span>
+            </label>
+
+            <label class="check-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" required>
+                    <span class="checkmark"></span>
+                </div>
+                <span class="item-label">Iluminacion de la isla funcional</span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn-safety">CONFIRMAR SEGURIDAD Y EMPEZAR TURNO</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem;">
+        <a href="inicio_gasolinera.html" style="color: #666; text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Regresar al Panel
+        </a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('safety-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Registro de seguridad compelto. ¡Que tengas un turno seguro!');
+        window.location.href = 'inicio_gasolinera.html';
+});
+</script>
+</body>
+</html>

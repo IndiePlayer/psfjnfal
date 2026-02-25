@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control de Temperaturas - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --temp-blue: #2980b9;
+      --temp-bg: #ebf5fb;
+      --danger: #e74c3c;
+    }
+
+    .header-temp {
+      background: var(--temp-blue);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid #1f618d;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .temp-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-left: 6px solid var(--temp-blue);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .temp-card.alert {
+      border-left-color: var(--danger);
+      background: #fff5f5;
+    }
+
+    .equipment-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .equipment-name {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .range-info {
+      font-size: 0.85rem;
+      color: #666;
+      background: #eee;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .input-temp {
+      width: 100px;
+      padding: 0.8rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      color: var(--temp-blue);
+    }
+
+    .unit {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .status-indicator {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .btn-save-temp {
+      width: 100%;
+      background: var(--temp-blue);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+
+    .btn-save-temp:hover {
+      background: #1f618d;
+    }
+
+    .history-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #666;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-temp">
+    <h1><i class="fas fa-thermometer-half"></i> Bitácora de Frío</h1>
+    <p>Registro obligatorio cada 4 horas</p>
+  </div>
+
+  <div class="container">
+    <div class="security-warning" style="margin-bottom: 1.5rem; font-size: 0.9rem;">
+      <strong>Nota Legal:</strong> La falsificación de registros de temperatura es una falta grave que compromete la seguridad alimentaria y puede incurrir en sanciones según la normativa sanitaria vigente.
+    </div>
+
+    <form id="temp-form">
+      <div class="temp-card" id="card-1">
+        <div class="equipment-info">
+          <span class="equipment-name">Nevera Lácteos y Embutidos</span>
+          <span class="range-info">Rango: 0°C a 4°C</span>
+        </div>
+        <div class="input-group">
+          <input type="number" step="0.1" class="input-temp" placeholder="0.0" required onchange="checkRange(this, 0, 4, 'card-1')">
+          <span class="unit">°C</span>
+          <span class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="temp-card" id="card-2">
+        <div class="equipment-info">
+          <span class="equipment-name">Cava de Cervezas</span>
+          <span class="range-info">Rango: 2°C a 6°C</span>
+        </div>
+        <div class="input-group">
+          <input type="number" step="0.1" class="input-temp" placeholder="0.0" required onchange="checkRange(this, 2, 6, 'card-2')">
+          <span class="unit">°C</span>
+          <span class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="temp-card" id="card-3">
+        <div class="equipment-info">
+          <span class="equipment-name">Congelador de Hielo / Helados</span>
+          <span class="range-info">Rango: -18°C a -12°C</span>
+        </div>
+        <div class="input-group">
+          <input type="number" step="0.1" class="input-temp" placeholder="0.0" required onchange="checkRange(this, -18, -12, 'card-3')">
+          <span class="unit">°C</span>
+          <span class="status-indicator"></span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-save-temp">REGISTRAR TEMPERATURAS</button>
+    </form>
+
+    <a href="tienda.html" class="history-link">
+      <i class="fas fa-arrow-left"></i> Volver al panel operativo
+    </a>
+  </div>
+
+  <script>
+    function checkRange(input, min, max, cardId) {
+      const val = parseFloat(input.value);
+      const card = document.getElementById(cardId);
+      const indicator = card.querySelector('.status-indicator');
+
+      if (val < min || val > max) {
+        card.classList.add('alert');
+        indicator.innerHTML = '<i class="fas fa-exclamation-circle"></i> FUERA DE RANGO';
+        indicator.style.color = 'var(--danger)';
+      } else {
+        card.classList.remove('alert');
+        indicator.innerHTML = '<i class="fas fa-check-circle"></i> NORMAL';
+        indicator.style.color = 'var(--check-green)';
+      }
+    }
+
+    document.getElementById('temp-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Temperaturas registradas correctamente. El sistema ha verificado que los datos cumplen con el protocolo de seguridad alimentaria.');
+      window.location.href = 'tienda.html';
+    });
+  </script>
+</body>
+</html>

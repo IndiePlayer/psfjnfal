@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Producción Diaria - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --primary-food: #e67e22; /* Color naranja apetitoso */
+      --secondary-food: #d35400;
+    }
+
+    .header-produccion {
+      background: var(--primary-food);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-radius: 0 0 15px 15px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .product-info i {
+      font-size: 1.5rem;
+      color: var(--primary-food);
+      width: 30px;
+      text-align: center;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-qty {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      background: #f8f9fa;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .btn-qty:active {
+      background: #ddd;
+      transform: scale(0.9);
+    }
+
+    .input-qty {
+      width: 40px;
+      text-align: center;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      background: transparent;
+    }
+
+    .summary-box {
+      background: #fdf2e9;
+      border: 2px dashed var(--primary-food);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+
+    .submit-area {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .btn-save {
+      background: var(--primary-food);
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    .btn-save:hover {
+      background: var(--secondary-food);
+    }
+
+    .tab-container {
+      display: flex;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #eee;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+      color: #777;
+    }
+
+    .tab.active {
+      color: var(--primary-food);
+      border-bottom: 3px solid var(--primary-food);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-produccion">
+    <h1><i class="fas fa-utensils"></i> Registro de Producción</h1>
+    <p>Control de Vitrina y Alimentos</p>
+  </div>
+
+  <div class="container">
+    <div class="tab-container">
+      <div class="tab active" onclick="switchTab('carga')">CARGA A VITRINA</div>
+      <div class="tab" onclick="switchTab('baja')">BAJA / MERMA</div>
+    </div>
+
+    <form id="form-produccion">
+      <div class="product-card">
+        <div class="product-info">
+          <i class="fas fa-circle-notch"></i>
+          <div>
+            <strong>Empanadas Carne/Pollo</strong>
+            <div style="font-size: 0.8rem; color: #888;">Unidades preparadas</div>
+          </div>
+        </div>
+        <div class="qty-controls">
+          <button type="button" class="btn-qty" onclick="changeQty('empanada', -1)">-</button>
+          <input type="number" id="empanada" value="0" class="input-qty" readonly>
+          <button type="button" class="btn-qty" onclick="changeQty('empanada', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-info">
+          <i class="fas fa-hotdog"></i>
+          <div>
+            <strong>Perros Calientes / Rollitos</strong>
+            <div style="font-size: 0.8rem; color: #888;">Unidades listas</div>
+          </div>
+        </div>
+        <div class="qty-controls">
+          <button type="button" class="btn-qty" onclick="changeQty('perros', -1)">-</button>
+          <input type="number" id="perros" value="0" class="input-qty" readonly>
+          <button type="button" class="btn-qty" onclick="changeQty('perros', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-info">
+          <i class="fas fa-bread-slice"></i>
+          <div>
+            <strong>Sandwiches Preparados</strong>
+            <div style="font-size: 0.8rem; color: #888;">Jamón y Queso / Pollo</div>
+          </div>
+        </div>
+        <div class="qty-controls">
+          <button type="button" class="btn-qty" onclick="changeQty('sandwiches', -1)">-</button>
+          <input type="number" id="sandwiches" value="0" class="input-qty" readonly>
+          <button type="button" class="btn-qty" onclick="changeQty('sandwiches', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-info">
+          <i class="fas fa-coffee"></i>
+          <div>
+            <strong>Termos de Tinto (Café)</strong>
+            <div style="font-size: 0.8rem; color: #888;">Litros o jarras preparadas</div>
+          </div>
+        </div>
+        <div class="qty-controls">
+          <button type="button" class="btn-qty" onclick="changeQty('cafe', -1)">-</button>
+          <input type="number" id="cafe" value="0" class="input-qty" readonly>
+          <button type="button" class="btn-qty" onclick="changeQty('cafe', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <strong><i class="fas fa-info-circle"></i> Nota para el empleado:</strong>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+          Recuerda que cada registro queda grabado con tu usuario y hora exacta. 
+          Asegúrate de que la vitrina siempre luzca llena y fresca.
+        </p>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="btn-save">GUARDAR REGISTRO</button>
+        <br><br>
+        <a href="tienda.html" style="color: #666; text-decoration: none;">
+          <i class="fas fa-arrow-left"></i> Volver al panel
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Función para manejar los botones + y -
+    function changeQty(id, amount) {
+      const input = document.getElementById(id);
+      let val = parseInt(input.value);
+      val += amount;
+      if (val < 0) val = 0;
+      input.value = val;
+    }
+
+    // Manejo de pestañas (tabs)
+    function switchTab(type) {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      const btn = document.querySelector('.btn-save');
+      if(type === 'baja') {
+        btn.style.background = '#dc3545';
+        btn.innerText = 'REGISTRAR MERMA';
+      } else {
+        btn.style.background = 'var(--primary-food)';
+        btn.innerText = 'GUARDAR REGISTRO';
+      }
+    }
+
+    // Envío del formulario
+    document.getElementById('form-produccion').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('¡Producción registrada exitosamente!');
+      window.location.href = 'tienda.html';
+    });
+  </script>
+</body>
+</html>

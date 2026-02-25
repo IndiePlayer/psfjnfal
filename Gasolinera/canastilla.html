@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canastilla e Insumo - Cervasa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        :root {
+            --oil-brown: #795548;
+            --oil-light: #efebe9;
+        }
+
+        .header-canastilla {
+            background: var(--oil-brown);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 4px solid #4e342e;
+        }
+
+        .container{
+            max-width: 800px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--oil-brown);
+            margin: 1.5rem 0 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .oil-card {
+            background: white;
+            border-radius: 12px ;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .oil-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .oil-info i {
+            font-size: 1.4rem;
+            color: var(--oil-brown);
+        }
+
+        .oil-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .oil-price {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .btn-step {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            cursor:pointer;
+            font-weight: bold;
+        }
+
+        .input-qty {
+            width: 35px;
+            text-align: center;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn-save-oil {
+            width: 100%;
+            background: var(--oil-brown);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+         .btn-save-oil:hover {
+            background: #4e342e;
+         }
+    </style>
+</head>
+<body>
+    
+    <div class="header-canastilla">
+        <h1><i class="fas fa-oil-can"></i> Inventario de Canastilla</h1>
+        <p>Aceites, Aditivos y Lubricantes</p>
+    </div>
+
+    <div class="container">
+        <div class="security-warning" style="margin-bottom: 1.5rem;">
+            <strong>Control de Existencias:</strong> Los productos de canastilla son de alta rotacion. Verifique sellos de seguridad antes de recibir. Cualquiere faltante sera responsabilidad del operario de turno
+        </div>
+
+        <form id="oil-form">
+            <div class="category-title"><i class="fas fa-car"></i> Aceites Motor (Cuartos)</div>
+
+            <div class="oil-card">
+                <div class="oil-info">
+                    
+                    <i class="fas fa-bottle-droplet"></i>
+                    <div>
+                        <span class="oil-name">Terpel 20W-50 Mineral</span>
+                        <span class="oil-price">$ 32.000 / ud</span>
+                    </div>
+                </div>
+
+                <div class="qty-control">
+                    <button type="button" class="btn-step" onclick="changeValue('oil1', -1)">-</button>
+                    <input type="number" id="oil1" value="0" class="input-qty" readonly>
+                    <button type="button" class="btn-step" onclick="changeValue('oil1', 1)">+</button>
+                </div>
+            </div>
+        
+            <div class="oil-card">
+                <div class="oil-info">
+                    <i class="fas fa-bottle-droplet"></i>
+                    <div>
+                        <span class="oil-name">Mobil Super 10W-30</span>
+                        <span class="oil-price">$ 45.000 / ud</span>
+                    </div>
+                </div>
+                <div class="qty-control">
+                    <button type="button" class="btn-step" onclick="changeValue('oil2', -1)">-</button>
+                    <input type="number" id="oil2" value="0" class="input-qty" readonly>
+                    <button type="button" class="btn-step" onclick="changeValue('oil2', 1)">+</button>
+
+                </div>
+            </div>
+
+            <div class="category-title"><i class="fas fa-vial"></i> Aditivos e Insumos</div>
+
+            <div class="oil-card">
+                <div class="oil-info">
+                    <i class="fas fa-flask"></i>
+                    <div>
+                        <span class="oil-name">Elevador de Octanaje</span>
+                        <span class="oil-price"> $ 18.500 / ud</span>
+                    </div>
+                </div>
+                <div class="qty-control">
+                    <button type="button" class="btn-step" onclick="changeValue('add1', -1)">-</button>
+                    <input type="number" id="add1" value="0" class="input-qty" readonly>
+                    <button type="button" class="btn-step" onclick="changeValue('add1', 1)">+</button>
+                </div>
+            </div>
+
+
+            <div class="oil-card">
+                <div class="oil-info">
+                    <i class="fas fa-droplet"></i>
+                    <div>
+                        <span class="oil-name"> Agua para Batería (Litro)</span>
+                        <span class="oil-price">$ 8.000 / ud</span>
+                    </div>
+                </div>
+                <div class="qty-control">
+                    <button type="button" class="btn-step" onclick="changeValue('water1', -1)">-</button>
+                    <input type="number" id="water" value="0" class="input-qty" readonly>
+                    <button type="button" class="btn-step" onclick="changeValue('water1', 1)">+</button>
+                </div>
+            </div>
+            <button type="submit" class="btn-save-oil">CONFIRMAR CONTEO DE CANASTILLA</button>
+        </form>
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <a href="inicio_gasolinera.html" style="color: #666; text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Regresar a la Isla
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function changeValue(id, amount) {
+            const input = document.getElementById(id);
+            let val = parseInt(input.value);
+            val += amount;
+            if (val < 0) val = 0;
+            input.value = val;
+        }
+
+        document.getElementById('oil-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Inventario de canastilla actualizado. Se ha generado el reporte de stock para el cierre de turno.')
+            window.location.href = 'inicio_gasolinera.html'
+        })
+    </script>
+</body>
+</html>

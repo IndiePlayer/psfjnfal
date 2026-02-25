@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control de Vencimientos - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --expire-purple: #8e44ad;
+      --critical-red: #e74c3c;
+      --warning-yellow: #f1c40f;
+    }
+
+    .header-vencimientos {
+      background: var(--expire-purple);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Tarjetas de Alerta */
+    .expiry-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-left: 8px solid #ccc;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .expiry-card.urgent { border-left-color: var(--critical-red); }
+    .expiry-card.soon { border-left-color: var(--warning-yellow); }
+
+    .date-badge {
+      text-align: center;
+      min-width: 70px;
+      padding: 5px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .date-badge .days {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .product-details { flex-grow: 1; }
+    .product-details strong { display: block; font-size: 1.1rem; }
+    .product-details span { font-size: 0.85rem; color: #666; }
+
+    .action-select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    .scan-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 2rem;
+      border: 2px dashed var(--expire-purple);
+    }
+
+    .btn-scan {
+      background: var(--expire-purple);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-save-vencimientos {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-vencimientos">
+    <h1><i class="fas fa-calendar-check"></i> Control de Vencimientos</h1>
+    <p>Evita mermas y asegura la frescura</p>
+  </div>
+
+  <div class="container">
+    <div class="scan-section">
+      <i class="fas fa-barcode" style="font-size: 2rem; color: var(--expire-purple); margin-bottom: 0.5rem;"></i>
+      <h3>Escanear Nuevo Producto</h3>
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Usa la cámara para registrar una fecha de vencimiento</p>
+      <button class="btn-scan" onclick="alert('Iniciando Cámara...')">
+        <i class="fas fa-camera"></i> ESCANEAR CÓDIGO
+      </button>
+    </div>
+
+    <h3 style="margin-bottom: 1rem; color: var(--primary);">Alertas Próximas</h3>
+
+    <div class="expiry-card urgent">
+      <div class="date-badge">
+        <span class="days">2</span>
+        Días
+      </div>
+      <div class="product-details">
+        <strong>Yogurt Alpina Fresa 150g</strong>
+        <span>Ubicación: Nevera Lácteos - Fila 1</span>
+      </div>
+      <select class="action-select">
+        <option>Acción necesaria...</option>
+        <option>Poner en Promoción</option>
+        <option>Retirar de Estantería</option>
+        <option>Consumo Inmediato</option>
+      </select>
+    </div>
+
+    <div class="expiry-card soon">
+      <div class="date-badge">
+        <span class="days">5</span>
+        Días
+      </div>
+      <div class="product-details">
+        <strong>Pan de Molde Bimbo Mediano</strong>
+        <span>Ubicación: Góndola Panadería</span>
+      </div>
+      <select class="action-select">
+        <option>Acción necesaria...</option>
+        <option>Frentear producto</option>
+        <option>Revisar Stock</option>
+      </select>
+    </div>
+
+    <div class="expiry-card">
+      <div class="date-badge">
+        <span class="days">12</span>
+        Días
+      </div>
+      <div class="product-details">
+        <strong>Leche Entera Colanta 1L</strong>
+        <span>Ubicación: Nevera Lácteos</span>
+      </div>
+      <select class="action-select">
+        <option>En buen estado</option>
+      </select>
+    </div>
+
+    <div class="security-warning" style="margin: 2rem 0;">
+      <strong>Protección de Inventarios:</strong> El reporte de fechas de vencimiento es una actividad de auditoría protegida. No modifique fechas reales en el sistema para ocultar olvidos en la rotación.
+    </div>
+
+    <button class="btn-save-vencimientos" onclick="guardarVencimientos()">
+      ACTUALIZAR REPORTE DE FECHAS
+    </button>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+      <a href="tienda.html" style="color: #666; text-decoration: none;">
+        <i class="fas fa-home"></i> Volver al Menú
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function guardarVencimientos() {
+      alert("Reporte de vencimientos actualizado. Se ha notificado al administrador sobre los productos con menos de 3 días de vida útil.");
+      window.location.href = 'tienda.html';
+    }
+  </script>
+</body>
+</html>

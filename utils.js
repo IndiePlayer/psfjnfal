@@ -236,7 +236,11 @@ function _obtenerRutaSesion() {
     var path = window.location.pathname || '';
     // Normalizamos a minúsculas para evitar problemas con mayúsculas
     var lower = path.toLowerCase();
-    if (lower.indexOf('/zona_admin/') !== -1 || lower.endsWith('/zona_admin')) {
+    // Si la página está dentro de cualquier subcarpeta del sitio,
+    // usamos una ruta relativa hacia arriba para llegar a `sesion.html`.
+    // Ej: /Zona_admin/admin.html -> ../sesion.html
+    var segments = lower.split('/').filter(Boolean);
+    if (segments.length > 1) {
       return '../sesion.html';
     }
   } catch (e) {

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Empleado - Tienda Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --employee-blue: #0056b3;
+      --success-green: #28a745;
+      --action-orange: #ff8800;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, #004080 100%);
+      color: white;
+      border-radius: 0 0 20px 20px;
+      margin-bottom: 2rem;
+    }
+
+    .welcome h1 { font-size: 2.2rem; margin-bottom: 0.5rem; color: white; }
+
+    .security-notice {
+      background: #fff4e5;
+      border-left: 5px solid var(--action-orange);
+      padding: 1.2rem;
+      margin: 1rem auto;
+      max-width: 1000px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #664d03;
+    }
+
+    /* Grid de Herramientas de "Oro" */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      border: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover { transform: translateY(-5px); }
+
+    .card i {
+      font-size: 2.5rem;
+      color: var(--action-orange);
+      margin-bottom: 1rem;
+    }
+
+    .card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.9rem; color: #666; margin-bottom: 1.2rem; }
+
+    .btn-card {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      padding: 0.8rem;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .btn-card:hover { background: var(--employee-blue); }
+
+    /* Badge para alertas rápidas */
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      background: #ebf5ff;
+      color: #007bff;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .action-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-store"></i>
+        <span>Cervasa Tienda</span>
+      </div>
+      <div class="auth-links">
+        <a href="../sesion.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Salir</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="welcome">
+      <h1>Panel Operativo de Tienda</h1>
+      <p id="fecha-actual"></p>
+    </div>
+
+    <div class="security-notice">
+      <i class="fas fa-user-shield"></i>
+      <strong>Recordatorio de Seguridad:</strong> Estás accediendo a datos internos de inventario y ventas. Tus credenciales son personales e intransferibles. Según la Ley 1581 de 2012, el manejo indebido de esta información puede acarrear sanciones.
+    </div>
+
+    <div class="action-grid">
+      
+      <div class="card">
+        <div>
+          <i class="fas fa-hotdog"></i>
+          <h3>Producción de Vitrina</h3>
+          <p>Registra lo que sale a vitrina (empanadas, sándwiches, café) para controlar el desperdicio.</p>
+          <span class="status-badge">Turno Mañana: Activo</span>
+        </div>
+        <a href="registro-comida.html" class="btn-card">Registrar Salida</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <i class="fas fa-calendar-times"></i>
+          <h3>Control de Próximos Vencidos</h3>
+          <p>Escanea o anota productos que vencen en los próximos 3 días para aplicar descuentos o retirar.</p>
+        </div>
+        <a href="vencimientos-empleado.html" class="btn-card" style="background: #dc3545;">Revisar Alertas</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <i class="fas fa-tasks"></i>
+          <h3>Checklist de Entrega</h3>
+          <p>Tareas de limpieza, orden y reposición necesarias para entregar el turno correctamente.</p>
+        </div>
+        <a href="checklist.html" class="btn-card">Abrir Lista de Tareas</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <i class="fas fa-boxes-stacked"></i>
+          <h3>Conteo de Críticos</h3>
+          <p>Inventario rápido de productos de alto valor (tabaco, licores, lubricantes) al iniciar turno.</p>
+        </div>
+        <a href="conteo-rapido.html" class="btn-card">Empezar Conteo</a>
+      </div>
+
+      <div class="card">
+        <div>
+          <i class="fas fa-thermometer-half"></i>
+          <h3>Bitácora de Frío</h3>
+          <p>Registro obligatorio de temperatura de neveras y cavas cada 4 horas.</p>
+        </div>
+        <a href="temperatura.html" class="btn-card">Registrar Temperatura</a>
+      </div>
+
+    <div class="card">
+  <div>
+    <i class="fas fa-truck-loading"></i>
+    <h3>Recepción de Proveedores</h3>
+    <p>Verifica y registra la entrada de mercancía para asegurar que lo que llega es lo que se factura.</p>
+  </div>
+  <a href="recepcion-pedidos.html" class="btn-card" style="background: var(--success-green);">Iniciar Recepción</a>
+</div>
+
+    </div>
+  </main>
+
+  <script>
+    // Mostrar fecha actual de forma amigable
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('fecha-actual').innerHTML = new Date().toLocaleDateString('es-ES', opciones);
+    
+    // Aquí podrías añadir lógica de sesión parecida a la del admin
+  </script>
+</body>
+</html>

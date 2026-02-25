@@ -333,30 +333,43 @@
 
         // Simular validación con API (aquí iría tu backend real)
         setTimeout(() => {
-          // Usuarios de prueba
-          const usuariosValidos = {
-            'admin@cervasa.com': 'admin123',
-            'gerente@cervasa.com': 'gerente123'
-          };
+            // Usuarios de prueba con roles
+            const usuariosValidos = {
+              'admin@cervasa.com': { pass: 'admin123', rol: 'admin' },
+              'gerente@cervasa.com': { pass: 'gerente123', rol: 'gerente' },
+              'tienda@cervasa.com': { pass: 'tienda123', rol: 'tienda' },
+              'estacion@cervasa.com': { pass: 'gas123', rol: 'gasolinera' }
+            };
 
-          if (usuariosValidos[email] === pass) {
-            mostrarExito('¡Bienvenido! Acceso concedido...', formMessage);
-            
-            // Guardar sesión
-            loginUsuario({
-              nombre: email.split('@')[0],
-              email: email,
-              rol: email.includes('admin') ? 'admin' : 'gerente',
-              id: Math.random().toString(36).substr(2, 9)
-            });
+            const user = usuariosValidos[email];
+            if (user && user.pass === pass) {
+              mostrarExito('¡Bienvenido! Acceso concedido...', formMessage);
 
-            setTimeout(() => {
-              window.location.href = 'Zona_admin/admin.html';
-            }, 1500);
-          } else {
-            mostrarError('Correo o contraseña incorrectos', formMessage);
-            habilitarFormulario(loginForm, true);
-          }
+              // Guardar sesión con rol
+              loginUsuario({
+                nombre: email.split('@')[0],
+                email: email,
+                rol: user.rol,
+                id: Math.random().toString(36).substr(2, 9)
+              });
+
+              // Determinar destino según rol
+              const destinos = {
+                admin: 'Zona_admin/admin.html',
+                gerente: 'Zona_admin/admin.html',
+                tienda: 'Zona_tienda/tienda.html',
+                gasolinera: 'Gasolinera/inicio_gasolinera.html'
+              };
+
+              const destino = destinos[user.rol] || 'sesion.html';
+
+              setTimeout(() => {
+                window.location.href = destino;
+              }, 1200);
+            } else {
+              mostrarError('Correo o contraseña incorrectos', formMessage);
+              habilitarFormulario(loginForm, true);
+            }
         }, 1000);
       });
     });

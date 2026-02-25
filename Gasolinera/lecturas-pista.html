@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lecturas de Surtidor - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --fuel-dark: #2c3e50;
+      --fuel-yellow: #f1c40f;
+      --diesel-black: #333;
+      --extra-red: #c0392b;
+      --corriente-yellow: #f39c12;
+    }
+
+    .header-lecturas {
+      background: var(--fuel-dark);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--fuel-yellow);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .pump-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+    }
+
+    .pump-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+
+    .pump-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--fuel-dark);
+    }
+
+    .hose-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 1.5rem;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .hose-corriente { border-left: 10px solid var(--corriente-yellow); background: #fffdf5; }
+    .hose-extra { border-left: 10px solid var(--extra-red); background: #fff5f5; }
+    .hose-diesel { border-left: 10px solid var(--diesel-black); background: #f8f9fa; }
+
+    .label-hose {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .input-reading {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      color: #333;
+    }
+
+    .input-reading:focus {
+      border-color: var(--fuel-dark);
+      outline: none;
+    }
+
+    .btn-save-lecturas {
+      width: 100%;
+      background: var(--fuel-dark);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn-save-lecturas:hover {
+      background: #1a252f;
+    }
+
+    .last-reading {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-lecturas">
+    <h1><i class="fas fa-gas-pump"></i> Registro de Lecturas</h1>
+    <p>Cierre de Turno / Apertura</p>
+  </div>
+
+  <div class="container">
+    <div class="security-warning" style="margin-bottom: 1.5rem;">
+      <strong>Auditoría de Combustible:</strong> Las lecturas ingresadas deben coincidir con el totalizador mecánico del surtidor. Cualquier discrepancia no reportada será responsabilidad del operario de turno.
+    </div>
+
+    <form id="reading-form">
+      <div class="pump-card">
+        <div class="pump-header">
+          <span class="pump-title">SURTIDOR #1</span>
+          <span class="badge" style="background: #e8f4fd; color: #2980b9; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">Lado A y B</span>
+        </div>
+
+        <div class="hose-row hose-corriente">
+          <div>
+            <label class="label-hose">Corriente (Gls)</label>
+            <input type="number" step="0.001" class="input-reading" placeholder="000000.000" required>
+            <div class="last-reading">Ant: 452,102.45</div>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="button" class="btn-action" style="font-size: 0.8rem;" onclick="alert('Cámara activada para OCR')"><i class="fas fa-camera"></i> Scan</button>
+          </div>
+        </div>
+
+        <div class="hose-row hose-extra">
+          <div>
+            <label class="label-hose">Extra (Gls)</label>
+            <input type="number" step="0.001" class="input-reading" placeholder="000000.000" required>
+            <div class="last-reading">Ant: 120,445.10</div>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="button" class="btn-action" style="font-size: 0.8rem;"><i class="fas fa-camera"></i> Scan</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pump-card">
+        <div class="pump-header">
+          <span class="pump-title">SURTIDOR #2</span>
+        </div>
+
+        <div class="hose-row hose-diesel">
+          <div>
+            <label class="label-hose">Diesel / ACPM (Gls)</label>
+            <input type="number" step="0.001" class="input-reading" placeholder="000000.000" required>
+            <div class="last-reading">Ant: 890,556.30</div>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="button" class="btn-action" style="font-size: 0.8rem;"><i class="fas fa-camera"></i> Scan</button>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-save-lecturas">ENVIAR LECTURAS Y CERRAR TURNO</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem;">
+      <a href="inicio_gasolinera.html" style="color: #666; text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Volver al Panel de Pista
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('reading-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const confirmacion = confirm("¿Has verificado que los números coinciden con el surtidor? Una vez enviado, el sistema calculará tu venta total en dinero.");
+      if(confirmacion) {
+        alert("Lecturas registradas. Tu venta calculada es de $4,520,000. Procede a entregar sobres de efectivo.");
+        window.location.href = 'operativo_gasolinera.html';
+      }
+    });
+  </script>
+</body>
+</html>

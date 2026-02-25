@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prueba de Serafín - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --test-blue: #3498db;
+      --test-dark: #2980b9;
+    }
+
+    .header-test {
+      background: var(--test-blue);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--test-dark);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .test-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--fuel-dark);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    /* Visualizador del Serafín */
+    .serafin-visual {
+      background: #f8f9fa;
+      border: 2px solid var(--test-blue);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .scale-input {
+      width: 120px;
+      font-size: 2rem;
+      text-align: center;
+      font-weight: bold;
+      color: var(--test-dark);
+      border: none;
+      background: transparent;
+      border-bottom: 3px solid var(--test-blue);
+    }
+
+    .unit-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .btn-save-test {
+      width: 100%;
+      background: var(--test-blue);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-save-test:hover { background: var(--test-dark); }
+  </style>
+</head>
+<body>
+
+  <div class="header-test">
+    <h1><i class="fas fa-vial"></i> Calibración / Serafín</h1>
+    <p>Verificación de Medida Exacta</p>
+  </div>
+
+  <div class="container">
+    <div class="security-warning" style="margin-bottom: 1.5rem;">
+      <strong>Control de Calidad:</strong> Según la normativa vigente, la prueba debe realizarse con un balde de 5 galones certificado. El error máximo permitido es de +/- 7 pulgadas cúbicas.
+    </div>
+
+    <form class="test-card" id="form-test">
+      <div class="form-group">
+        <label>Surtidor y Manguera:</label>
+        <select class="input-field" required>
+          <option value="">Seleccione manguera...</option>
+          <option>Surtidor 1 - Corriente (Lado A)</option>
+          <option>Surtidor 1 - Extra (Lado A)</option>
+          <option>Surtidor 2 - Diesel (Lado B)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Lectura Inicial (Gls):</label>
+        <input type="number" step="0.001" class="input-field" placeholder="0.000" required>
+      </div>
+
+      <div class="serafin-visual">
+        <label style="display: block; margin-bottom: 10px; font-weight: bold;">Resultado en Escala (Pulgadas Cúbicas):</label>
+        <div>
+          <span class="unit-label">-</span>
+          <input type="number" class="scale-input" value="0" step="1">
+          <span class="unit-label">+</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">(0 es medida exacta, marcar la desviación según la escala del balde)</p>
+      </div>
+
+      <div class="form-group">
+        <label>¿Se retornó el producto al tanque?</label>
+        <select class="input-field">
+          <option>Sí, retorno verificado</option>
+          <option>No (Explicar en observaciones)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-save-test">
+        <i class="fas fa-save"></i> REGISTRAR PRUEBA
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="inicio_gasolinera.html" style="color: #666; text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Volver a la Isla
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('form-test').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Prueba de calibración registrada con éxito. Se ha generado un comprobante digital de medida.');
+      window.location.href = 'inicio_gasolinera.html';
+    });
+  </script>
+</body>
+</html>

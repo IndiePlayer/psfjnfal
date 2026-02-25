@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conteo de Críticos - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --critical-red: #c0392b;
+      --critical-dark: #2c3e50;
+    }
+
+    .header-criticos {
+      background: var(--critical-dark);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--critical-red);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .alert-box {
+      background: #fdf2f2;
+      border: 1px solid #f8d7da;
+      color: #721c24;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .inventory-table {
+      width: 100%;
+      background: white;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .inventory-table th {
+      background: #f8f9fa;
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 2px solid #dee2e6;
+      color: var(--primary);
+    }
+
+    .inventory-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item-name {
+      font-weight: 600;
+      display: block;
+    }
+
+    .item-category {
+      font-size: 0.75rem;
+      color: #777;
+      text-transform: uppercase;
+    }
+
+    .input-count {
+      width: 60px;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .input-count:focus {
+      border-color: var(--critical-red);
+      outline: none;
+      box-shadow: 0 0 5px rgba(192, 57, 43, 0.2);
+    }
+
+    .actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+    }
+
+    .btn-submit {
+      background: var(--critical-red);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #a93226;
+    }
+
+    @media (max-width: 600px) {
+      .inventory-table th:nth-child(2), 
+      .inventory-table td:nth-child(2) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-criticos">
+    <h1><i class="fas fa-eye"></i> Control de Inventario Crítico</h1>
+    <p>Cigarrillos, Licores y Lubricantes</p>
+  </div>
+
+  <div class="container">
+    <div class="alert-box">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>Este conteo es obligatorio al recibir y entregar turno para deslindar responsabilidades.</span>
+    </div>
+
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th>Cantidad Física</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="item-name">Marlboro Rojo (Cajetilla)</span>
+            <span class="item-category">Cigarrillos</span>
+          </td>
+          <td>Mostrador</td>
+          <td><input type="number" class="input-count" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="item-name">Mustang Blue (Cajetilla)</span>
+            <span class="item-category">Cigarrillos</span>
+          </td>
+          <td>Mostrador</td>
+          <td><input type="number" class="input-count" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="item-name">Aguardiente Néctar 750ml</span>
+            <span class="item-category">Licores</span>
+          </td>
+          <td>Nevera/Estante</td>
+          <td><input type="number" class="input-count" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="item-name">Old Parr 750ml</span>
+            <span class="item-category">Licores</span>
+          </td>
+          <td>Vitrina Seguridad</td>
+          <td><input type="number" class="input-count" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="item-name">Aceite Terpel 20W-50 (Cuarto)</span>
+            <span class="item-category">Lubricantes</span>
+          </td>
+          <td>Exhibidor Exterior</td>
+          <td><input type="number" class="input-count" placeholder="0"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="actions">
+      <a href="tienda.html" style="color: #666; text-decoration: none;">
+        <i class="fas fa-times"></i> Cancelar
+      </a>
+      <button type="button" class="btn-submit" onclick="finalizarConteo()">
+        <i class="fas fa-check-double"></i> FINALIZAR Y FIRMAR CONTEO
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function finalizarConteo() {
+      const confirmacion = confirm("¿Confirmas que las cantidades físicas coinciden con lo ingresado? Se generará un registro con tu firma digital.");
+      if (confirmacion) {
+        alert("Conteo guardado exitosamente. Se ha enviado una copia al administrador.");
+        window.location.href = 'tienda.html';
+      }
+    }
+  </script>
+
+</body>
+</html>

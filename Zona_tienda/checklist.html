@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checklist de Turno - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css"/>
+  <style>
+    :root {
+      --check-green: #27ae60;
+      --check-bg: #f4fbf7;
+    }
+
+    .header-checklist {
+      background: var(--check-green);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .check-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .check-section h2 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--check-bg);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
+
+    .check-item:last-child { border-bottom: none; }
+
+    /* Estilo del Checkbox personalizado */
+    .checkbox-wrapper {
+      position: relative;
+      width: 25px;
+      height: 25px;
+      margin-right: 15px;
+    }
+
+    .checkbox-wrapper input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #eee;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .checkbox-wrapper:hover input ~ .checkmark { background-color: #ccc; }
+    .checkbox-wrapper input:checked ~ .checkmark { background-color: var(--check-green); }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+
+    .checkbox-wrapper input:checked ~ .checkmark:after { display: block; }
+
+    .item-text { font-size: 1rem; color: #444; }
+
+    .comment-area {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-family: inherit;
+    }
+
+    .btn-finish {
+      width: 100%;
+      background: var(--check-green);
+      color: white;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-checklist">
+    <h1><i class="fas fa-clipboard-check"></i> Entrega de Turno</h1>
+    <p>Asegura la calidad de la próxima jornada</p>
+  </div>
+
+  <div class="container">
+    <form id="checklist-form">
+      
+      <div class="check-section">
+        <h2><i class="fas fa-broom"></i> Limpieza y Aseo</h2>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Cafetera limpia y purgada</span>
+        </label>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Mesas y barra de consumo desinfectadas</span>
+        </label>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Pisos del área de tienda barridos y trapeados</span>
+        </label>
+      </div>
+
+      <div class="check-section">
+        <h2><i class="fas fa-box-open"></i> Reposición</h2>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Neveras de bebidas "Cervasa" llenas y frenteadas</span>
+        </label>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Estación de salsas y servilletas completa</span>
+        </label>
+        <label class="check-item">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+          </div>
+          <span class="item-text">Vitrina de comida caliente con stock mínimo</span>
+        </label>
+      </div>
+
+      <div class="check-section">
+        <h2><i class="fas fa-comment-dots"></i> Pendientes / Novedades</h2>
+        <textarea class="comment-area" rows="3" placeholder="Ej: La nevera 2 hace un ruido extraño, queda pendiente recibir proveedor de pan..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-finish">FINALIZAR ENTREGA DE TURNO</button>
+      
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="tienda.html" style="color: #666; text-decoration: none;">
+          <i class="fas fa-chevron-left"></i> Regresar
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('checklist-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('¡Turno entregado correctamente! Se ha registrado el cumplimiento del 100% de las tareas.');
+      window.location.href = 'tienda.html';
+    });
+  </script>
+</body>
+</html>
