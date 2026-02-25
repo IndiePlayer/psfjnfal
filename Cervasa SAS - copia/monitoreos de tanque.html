@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monitoreo de Tanques - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 5%;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      font-size: 2.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    .status-operativo {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .status-nivel-bajo {
+      color: #fd7e14;
+      font-weight: bold;
+    }
+
+    .status-alerta-agua {
+      color: #dc3545;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .btn-action {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-new {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-new:hover {
+      background: #218838;
+    }
+
+    .btn-edit {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #e55a00;
+    }
+
+    .btn-cancel {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-cancel:hover {
+      background: #c82333;
+    }
+
+    @media (max-width: 900px) {
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        min-width: 800px;
+      }
+      .actions {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .btn-action {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-gas-pump"></i>
+        <span>Cervasa</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard Admin</a>
+        <a href="#gasoline-management">Gasolinera</a>
+        <a href="#store-management" class="active">Tanques</a>
+      </div>
+      <div class="auth-links">
+        <a href="sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Monitoreos de Tanques</h1>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Tanque</th>
+            <th>Producto</th>
+            <th>Volumen</th>
+            <th>Agua</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tanque1</td>
+            <td>Corriente</td>
+            <td>4,200 gal</td>
+            <td>0.5"</td>
+            <td class="status-operativo">Operativo</td>
+          </tr>
+          <tr>
+            <td>Tanque2</td>
+            <td>Extra</td>
+            <td>1,500 gal</td>
+            <td>0.1"</td>
+            <td class="status-nivel-bajo">Nivel Bajo</td>
+          </tr>
+          <tr>
+            <td>Tanque3</td>
+            <td>Diesel</td>
+            <td>3,800 gal</td>
+            <td>0.8"</td>
+            <td class="status-alerta-agua">Alerta Agua</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn-action btn-new"><strong>[+]</strong> Registrar Nueva Medición</button>
+      <button class="btn-action btn-edit"><strong>[✏]</strong> Corregir Registro</button>
+      <button class="btn-action btn-cancel"><strong>[O]</strong> Anular Registro</button>
+    </div>
+  </main>
+
+
+
+  <script src="utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      requiereAutenticacion('sesion.html');
+    });
+  </script>
