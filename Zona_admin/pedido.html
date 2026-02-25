@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pedido Sugerido - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --success: #28a745;
+      --info: #17a2b8;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 5%;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 { color: var(--primary); margin: 0; }
+
+    /* Resumen de Pedido */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .card h3 { font-size: 0.9rem; color: #666; margin-bottom: 0.5rem; }
+    .card p { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+
+    /* Tabla de Pedidos */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead { background: var(--primary); color: white; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--light-gray); }
+
+    .stock-critical { color: var(--accent); font-weight: bold; }
+    
+    .input-pedido {
+      width: 80px;
+      padding: 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--light-gray);
+      text-align: center;
+    }
+
+    .btn-generate {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-generate:hover { background: #218838; }
+
+    @media (max-width: 768px) {
+      .header-actions { flex-direction: column; gap: 1rem; text-align: center; }
+      table { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-cart-arrow-down"></i>
+        <span>Cervasa Logistics</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="surtidora.html">Gasolinera</a>
+        <a href="#" class="active">Pedido Sugerido</a>
+      </div>
+      <div class="auth-links">
+       <a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="header-actions">
+      <h1><i class="fas fa-clipboard-list"></i> Pedido Sugerido</h1>
+      <button class="btn-generate">
+        <i class="fas fa-paper-plane"></i> Enviar para revisión
+      </button>
+    </div>
+
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Ítems bajo el mínimo</h3>
+        <p>12</p>
+      </div>
+      <div class="card">
+        <h3>Valor Estimado</h3>
+        <p>$1.240.000</p>
+      </div>
+      <div class="card">
+        <h3>Proveedor Principal</h3>
+        <p>Distribuidora Central</p>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Stock Actual</th>
+            <th>Stock Ideal</th>
+            <th>Sugerido</th>
+            <th>Confirmar Pedido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aceite Motor 10W40</td>
+            <td>Lubricantes</td>
+            <td class="stock-critical">5 und</td>
+            <td>20 und</td>
+            <td><strong>15 und</strong></td>
+            <td><input type="number" class="input-pedido" value="15"></td>
+          </tr>
+          <tr>
+            <td>Agua Mineral 500ml</td>
+            <td>Tienda</td>
+            <td>45 und</td>
+            <td>100 und</td>
+            <td><strong>55 und</strong></td>
+            <td><input type="number" class="input-pedido" value="55"></td>
+          </tr>
+          <tr>
+            <td>Líquido Frenos 250ml</td>
+            <td>Aditivos</td>
+            <td class="stock-critical">2 und</td>
+            <td>12 und</td>
+            <td><strong>10 und</strong></td>
+            <td><input type="number" class="input-pedido" value="10"></td>
+          </tr>
+          <tr>
+            <td>Snack Papas Mega</td>
+            <td>Tienda</td>
+            <td>12 und</td>
+            <td>40 und</td>
+            <td><strong>28 und</strong></td>
+            <td><input type="number" class="input-pedido" value="28"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof requiereAutenticacion === 'function') {
+        requiereAutenticacion('sesion.html');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -229,9 +229,25 @@ function obtenerUsuarioActual() {
 /**
  * Simula logout de usuario
  */
+// Determina la ruta correcta hacia la página de sesión considerando
+// si la página actual está dentro de la carpeta 'Zona_admin'.
+function _obtenerRutaSesion() {
+  try {
+    var path = window.location.pathname || '';
+    // Normalizamos a minúsculas para evitar problemas con mayúsculas
+    var lower = path.toLowerCase();
+    if (lower.indexOf('/zona_admin/') !== -1 || lower.endsWith('/zona_admin')) {
+      return '../sesion.html';
+    }
+  } catch (e) {
+    console.warn('No se pudo determinar la ruta de sesión, usando por defecto');
+  }
+  return 'sesion.html';
+}
+
 function logoutUsuario() {
   eliminarDelLocal('usuarioActual');
-  window.location.href = 'sesion.html';
+  window.location.href = _obtenerRutaSesion();
 }
 
 /**
@@ -246,7 +262,10 @@ function hayUsuarioEnSesion() {
  * Requiere autenticación para acceder a página
  * @param {string} urlRedireccion - URL a redirigir si no está autenticado
  */
-function requiereAutenticacion(urlRedireccion = 'sesion.html') {
+function requiereAutenticacion(urlRedireccion) {
+  if (typeof urlRedireccion === 'undefined') {
+    urlRedireccion = _obtenerRutaSesion();
+  }
   if (!hayUsuarioEnSesion()) {
     window.location.href = urlRedireccion;
   }

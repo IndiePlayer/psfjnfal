@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control de Temperaturas - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+ <link rel="stylesheet" href="../styles.css">
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --safe: #28a745;
+      --danger: #dc3545;
+      --cold: #007bff;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 5%;
+    }
+
+    h1 { text-align: center; color: var(--primary); margin-bottom: 2rem; }
+
+    /* Grid de Cavas/Neveras */
+    .temp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .temp-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-top: 5px solid var(--cold);
+    }
+
+    .temp-card.alert { border-top-color: var(--danger); }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-header h3 { color: var(--primary); font-size: 1.2rem; }
+
+    .temp-display {
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+
+    .temp-value {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .temp-unit { font-size: 1.2rem; color: #666; }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-ok { color: var(--safe); }
+    .status-error { color: var(--danger); }
+
+    .last-update {
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
+      border-top: 1px solid var(--light-gray);
+      padding-top: 1rem;
+    }
+
+    .btn-log {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn-log:hover { background: #002850; }
+
+    @media (max-width: 600px) {
+      .temp-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-thermometer-half"></i>
+        <span>Cervasa Climate</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="surtidora.html">Gasolinera</a>
+        <a href="#" class="active">Temperaturas</a>
+      </div>
+      <div class="auth-links">
+       <a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Monitoreo de Cavas y Equipos</h1>
+
+    <div class="temp-grid">
+      <div class="temp-card">
+        <div class="card-header">
+          <h3>Cava Principal - Bebidas</h3>
+          <i class="fas fa-snowflake" style="color: var(--cold);"></i>
+        </div>
+        <div class="temp-display">
+          <span class="temp-value">4.2</span><span class="temp-unit">°C</span>
+        </div>
+        <div class="status-indicator status-ok">
+          <i class="fas fa-check-circle"></i> Rango Óptimo
+        </div>
+        <div class="last-update">Última lectura: Hace 2 minutos</div>
+        <button class="btn-log"><i class="fas fa-history"></i> Ver Historial</button>
+      </div>
+
+      <div class="temp-card">
+        <div class="card-header">
+          <h3>Nevera Lácteos</h3>
+          <i class="fas fa-ice-cream" style="color: var(--cold);"></i>
+        </div>
+        <div class="temp-display">
+          <span class="temp-value">3.8</span><span class="temp-unit">°C</span>
+        </div>
+        <div class="status-indicator status-ok">
+          <i class="fas fa-check-circle"></i> Rango Óptimo
+        </div>
+        <div class="last-update">Última lectura: Hace 5 minutos</div>
+        <button class="btn-log"><i class="fas fa-history"></i> Ver Historial</button>
+      </div>
+
+      <div class="temp-card alert">
+        <div class="card-header">
+          <h3>Congelador Carnes</h3>
+          <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+        </div>
+        <div class="temp-display">
+          <span class="temp-value">-12.5</span><span class="temp-unit">°C</span>
+        </div>
+        <div class="status-indicator status-error">
+          <i class="fas fa-arrow-up"></i> Temperatura Alta (Alerta)
+        </div>
+        <div class="last-update">Última lectura: Hace 1 minuto</div>
+        <button class="btn-log" style="background: var(--danger);"><i class="fas fa-bell"></i> Atender Alerta</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof requiereAutenticacion === 'function') {
+        requiereAutenticacion('sesion.html');
+      }
+    });
+  </script>
+</body>
+</html>

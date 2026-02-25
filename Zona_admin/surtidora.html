@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control de Surtidores - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Estética de surtidor.html aplicada */
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --success: #28a745;
+      --warning: #ffc107;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header manteniendo funcionalidad de surtidora.html */
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo-div { 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .auth-links .logout-btn {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    /* Main Layout */
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 5%;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .turno-selector {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .turno-selector label {
+      font-weight: 600;
+      margin-right: 0.8rem;
+      color: var(--primary);
+    }
+
+    .turno-selector select {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--light-gray);
+      outline: none;
+    }
+
+    /* Cards de Surtidores */
+    .surtidor-info {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .surtidor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--gray-bg);
+      padding-bottom: 1rem;
+    }
+
+    .surtidor-header h2 {
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    .status {
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .status:contains("Abierto"), .status { background: var(--success); color: white; }
+    /* Estilo para cuando el surtidor 3 está cerrado */
+    #surtidor-3 .status { background: #666; }
+
+    .islero-info {
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Filas de Producto */
+    .product-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--gray-bg);
+    }
+
+    .product-row:last-of-type { border-bottom: none; }
+
+    .product-name { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+    .product-volume { text-align: right; font-weight: bold; color: #444; }
+    .product-last-sale { text-align: right; color: #777; font-style: italic; font-size: 0.9rem; }
+
+    /* Botones de Acción */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+
+    .btn-action {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #002347; transform: translateY(-2px); }
+    
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #218838; transform: translateY(-2px); }
+    
+    .btn-warning { background: var(--accent); color: white; }
+    .btn-warning:hover { background: #e55a00; transform: translateY(-2px); }
+
+    /* Navegación Lateral */
+    .nav-surtidor {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      color: var(--primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      border: 1px solid var(--light-gray);
+    }
+
+    .nav-surtidor:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-left { left: 30px; }
+    .nav-right { right: 30px; }
+
+    .hidden { display: none; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .product-row { grid-template-columns: 1fr; gap: 0.5rem; text-align: center; }
+      .product-volume, .product-last-sale { text-align: center; }
+      .nav-surtidor { width: 45px; height: 45px; }
+      .nav-left { left: 10px; }
+      .nav-right { right: 10px; }
+      .nav-links { display: none; } /* Simplificación para móvil */
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-gas-pump"></i>
+        <span>Cervasa</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard Admin</a>
+        <a href="#gasoline-management" class="active">Gasolinera</a>
+        <a href="#store-management">Tienda</a>
+      </div>
+      <div class="auth-links">
+        <a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Control de Surtidores</h1>
+
+    <div class="turno-selector">
+      <label>Turno actual:</label>
+      <select id="turno-global">
+        <option>Mañana</option>
+        <option selected>Tarde</option>
+        <option>Noche</option>
+      </select>
+    </div>
+
+    <div class="surtidor-info" id="surtidor-1">
+      <div class="surtidor-header">
+        <h2>Surtidor 01</h2>
+        <span class="status">Abierto</span>
+      </div>
+      <div class="islero-info">
+        <i class="fas fa-user-circle"></i> Islero: Juan Pérez
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Corriente</div>
+        <div class="product-volume">125,450.2 gal</div>
+        <div class="product-last-sale">Última venta: $15.000</div>
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Extra</div>
+        <div class="product-volume">45,120.8 gal</div>
+        <div class="product-last-sale">Sin ventas recientes</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-action btn-primary"><i class="fas fa-ruler"></i> Ingresar Lectura</button>
+        <button class="btn-action btn-success"><i class="fas fa-check-circle"></i> Registrar Serafín</button>
+        <button class="btn-action btn-warning"><i class="fas fa-edit"></i> Ajustar Venta</button>
+      </div>
+    </div>
+
+    <div class="surtidor-info hidden" id="surtidor-2">
+      <div class="surtidor-header">
+        <h2>Surtidor 02</h2>
+        <span class="status">Abierto</span>
+      </div>
+      <div class="islero-info">
+        <i class="fas fa-user-circle"></i> Islero: María López
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Diesel</div>
+        <div class="product-volume">78,920.5 gal</div>
+        <div class="product-last-sale">Última venta: $22.800</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-action btn-primary"><i class="fas fa-ruler"></i> Ingresar Lectura</button>
+        <button class="btn-action btn-success"><i class="fas fa-check-circle"></i> Registrar Serafín</button>
+        <button class="btn-action btn-warning"><i class="fas fa-edit"></i> Ajustar Venta</button>
+      </div>
+    </div>
+
+    <div class="surtidor-info hidden" id="surtidor-3">
+      <div class="surtidor-header">
+        <h2>Surtidor 03</h2>
+        <span class="status" style="background: #6c757d;">Cerrado</span>
+      </div>
+      <div class="islero-info">
+        <i class="fas fa-user-circle"></i> Islero: Carlos Ramírez
+      </div>
+
+      <div class="product-row">
+        <div class="product-name">Corriente</div>
+        <div class="product-volume">210,300.0 gal</div>
+        <div class="product-last-sale">Última venta: $18.500</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-action btn-primary"><i class="fas fa-ruler"></i> Ingresar Lectura</button>
+        <button class="btn-action btn-success"><i class="fas fa-check-circle"></i> Registrar Serafín</button>
+        <button class="btn-action btn-warning"><i class="fas fa-edit"></i> Ajustar Venta</button>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="nav-surtidor nav-left" id="prev-surtidor" onclick="changeSurtidor(-1)"><i class="fas fa-chevron-left"></i></div>
+  <div class="nav-surtidor nav-right" id="next-surtidor" onclick="changeSurtidor(1)"><i class="fas fa-chevron-right"></i></div>
+
+  <script src="../utils.js"></script>
+  <script>
+    let currentSurtidor = 1;
+    const totalSurtidores = 3;
+
+    function changeSurtidor(direction) {
+      document.querySelectorAll('.surtidor-info').forEach(el => el.classList.add('hidden'));
+
+      currentSurtidor += direction;
+      if (currentSurtidor < 1) currentSurtidor = totalSurtidores;
+      if (currentSurtidor > totalSurtidores) currentSurtidor = 1;
+
+      document.getElementById(`surtidor-${currentSurtidor}`).classList.remove('hidden');
+    }
+
+    document.getElementById('surtidor-1').classList.remove('hidden');
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verifica si la función existe en utils.js antes de llamarla
+      if (typeof requiereAutenticacion === 'function') {
+        requiereAutenticacion('sesion.html');
+      }
+    });
+  </script>
+
+</body>
+</html>

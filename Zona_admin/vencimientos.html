@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vencimientos Próximos - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --success: #28a745;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    .nav-links a { color: white; text-decoration: none; margin: 0 1.2rem; font-weight: 500; }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 5%;
+    }
+
+    h1 { color: var(--primary); margin-bottom: 2rem; }
+
+    /* Resumen de Alertas */
+    .expiry-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .bg-danger { background: var(--danger); }
+    .bg-warning { background: var(--warning); color: #333; }
+    .bg-success { background: var(--success); }
+
+    /* Tabla de Vencimientos */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--primary); color: white; }
+    th, td { padding: 1.2rem; text-align: left; border-bottom: 1px solid var(--light-gray); }
+
+    .status-pill {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .status-expired { background: #f8d7da; color: var(--danger); }
+    .status-soon { background: #fff3cd; color: #856404; }
+    .status-ok { background: #d4edda; color: var(--success); }
+
+    .btn-action {
+      background: none;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+
+    .btn-action:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .expiry-summary { grid-template-columns: 1fr; }
+      th:nth-child(2), td:nth-child(2) { display: none; } /* Oculta lote en móvil */
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-calendar-times"></i>
+        <span>Cervasa Quality</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="surtidora.html">Gasolinera</a>
+        <a href="#" class="active">Vencimientos</a>
+      </div>
+      <div class="auth-links">
+<a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Control de Vencimientos</h1>
+
+    <div class="expiry-summary">
+      <div class="summary-card">
+        <div class="icon-box bg-danger"><i class="fas fa-skull-crossbones"></i></div>
+        <div>
+          <p style="color: #666; font-size: 0.9rem;">Vencidos</p>
+          <p style="font-size: 1.4rem; font-weight: bold;">3 ítems</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="icon-box bg-warning"><i class="fas fa-clock"></i></div>
+        <div>
+          <p style="color: #666; font-size: 0.9rem;">Próximos (0-15 días)</p>
+          <p style="font-size: 1.4rem; font-weight: bold;">8 ítems</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="icon-box bg-success"><i class="fas fa-calendar-check"></i></div>
+        <div>
+          <p style="color: #666; font-size: 0.9rem;">Vigentes</p>
+          <p style="font-size: 1.4rem; font-weight: bold;">142 ítems</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Lote</th>
+            <th>Fecha Vencimiento</th>
+            <th>Estado</th>
+            <th>Acción Sugerida</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Yogurt Fresa 250ml</strong></td>
+            <td>L-9928</td>
+            <td style="color: var(--danger); font-weight: bold;">20 Feb 2026</td>
+            <td><span class="status-pill status-expired">Vencido</span></td>
+            <td><button class="btn-action">Retirar y Ajustar</button></td>
+          </tr>
+          <tr>
+            <td><strong>Sándwich Jamón/Queso</strong></td>
+            <td>L-1022</td>
+            <td style="color: #856404; font-weight: bold;">26 Feb 2026</td>
+            <td><span class="status-pill status-soon">Vence Pronto</span></td>
+            <td><button class="btn-action">Promoción 2x1</button></td>
+          </tr>
+          <tr>
+            <td><strong>Aceite Aditivo X</strong></td>
+            <td>L-4451</td>
+            <td>15 Mar 2026</td>
+            <td><span class="status-pill status-soon">Vence Pronto</span></td>
+            <td><button class="btn-action">Revisar Stock</button></td>
+          </tr>
+          <tr>
+            <td><strong>Agua Mineral 1L</strong></td>
+            <td>L-0021</td>
+            <td>20 Dic 2026</td>
+            <td><span class="status-pill status-ok">Vigente</span></td>
+            <td><button class="btn-action">Ninguna</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof requiereAutenticacion === 'function') {
+        requiereAutenticacion('sesion.html');
+      }
+    });
+  </script>
+</body>
+</html>

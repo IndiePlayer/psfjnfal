@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Producción del Día - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f4f7f6;
+      --text: #333;
+      --accent: #ff6200;
+      --success: #28a745;
+      --white: #ffffff;
+      --border: #e1e8ed;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+    }
+
+    /* --- NAVEGACIÓN REFORZADA (Sin desaparición) --- */
+    header {
+      background: var(--primary);
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-div { color: white; font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    .nav-links a { 
+      color: #ffffff !important; 
+      text-decoration: none; 
+      margin: 0 1rem; 
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { 
+      color: var(--accent) !important; 
+    }
+
+    .logout-btn {
+      background: var(--accent);
+      color: white !important;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* --- CONTENIDO --- */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 5%; }
+
+    .header-page {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .date-badge {
+      background: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .grid-production {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--gray-bg);
+      padding-bottom: 10px;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px; font-size: 0.85rem; color: #888; text-transform: uppercase; }
+    td { padding: 12px; border-bottom: 1px solid #f9f9f9; font-size: 0.95rem; }
+
+    .qty { font-weight: bold; color: var(--primary); text-align: center; }
+    .price { color: #666; text-align: right; }
+
+    .badge-food {
+      background: #fff3e0;
+      color: #e65100;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .total-row {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 2px dashed var(--gray-bg);
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 850px) {
+      .grid-production { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div"><i class="fas fa-chart-line"></i> Cervasa Admin</div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="#" class="active">Producción</a>
+      </div>
+      <a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="header-page">
+      <h1>Producción del Día</h1>
+      <div class="date-badge" id="currentDate">Cargando fecha...</div>
+    </div>
+
+    <div class="grid-production">
+      
+      <div class="card">
+        <h2><i class="fas fa-box"></i> Ventas Tienda (Inventario)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th style="text-align:center;">Cant.</th>
+              <th style="text-align:right;">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="tiendaBody">
+            <tr>
+              <td>Gaseosa Coca-Cola 500ml</td>
+              <td class="qty">45</td>
+              <td class="price">$157,500</td>
+            </tr>
+            <tr>
+              <td>Paquete Papas Margarita (Pollo)</td>
+              <td class="qty">28</td>
+              <td class="price">$84,000</td>
+            </tr>
+            <tr>
+              <td>Chocolatina Jet</td>
+              <td class="qty">112</td>
+              <td class="price">$134,400</td>
+            </tr>
+            <tr>
+              <td>Agua Mineral 600ml</td>
+              <td class="qty">35</td>
+              <td class="price">$70,000</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total-row">
+          <span>Total Tienda</span>
+          <span style="color: var(--success);">$445,900</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><i class="fas fa-utensils"></i> Comidas Preparadas (Cocina)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Plato / Alimento</th>
+              <th style="text-align:center;">Cant.</th>
+              <th style="text-align:right;">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="cocinaBody">
+            <tr>
+              <td>Hamburguesa Especial <span class="badge-food">Combo</span></td>
+              <td class="qty">18</td>
+              <td style="text-align:right; color: var(--success);">Completado</td>
+            </tr>
+            <tr>
+              <td>Perro Caliente Sencillo</td>
+              <td class="qty">24</td>
+              <td style="text-align:right; color: var(--success);">Completado</td>
+            </tr>
+            <tr>
+              <td>Empanada de Carne</td>
+              <td class="qty">65</td>
+              <td style="text-align:right; color: var(--success);">Completado</td>
+            </tr>
+            <tr>
+              <td>Arepa con Todo</td>
+              <td class="qty">12</td>
+              <td style="text-align:right; color: var(--accent);">En proceso</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total-row">
+          <span>Total Servicios</span>
+          <span style="color: var(--success);">$682,000</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Mostrar fecha actual formateada
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('es-ES', options);
+  </script>
+
+</body>
+</html>

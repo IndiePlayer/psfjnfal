@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Horario y Personal - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">">
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --success: #28a745;
+      --warning: #fd7e14;
+      --danger: #dc3545;
+      --rest-day: #fff3cd; /* Amarillo para Descanso */
+      --morning: #d4edda;  /* Verde para Mañana */
+      --afternoon: #cce5ff;/* Azul para Tarde */
+      --night: #f8d7da;    /* Rojo para Noche */
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+    .nav-links a { color: white; text-decoration: none; margin: 0 1.2rem; font-weight: 500; }
+    .nav-links a.active { color: var(--accent); }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+    }
+
+    main { max-width: 1400px; margin: 2rem auto; padding: 0 2%; }
+
+    .calendar-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      overflow-x: auto;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-header h2 { color: var(--primary); min-width: 250px; text-align: center; }
+
+    .btn-nav {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-nav:hover { background: var(--accent); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { border: 1px solid var(--light-gray); padding: 8px; text-align: center; min-width: 40px; }
+    th { background: var(--primary); color: white; }
+    
+    .employee-name { 
+        text-align: left; 
+        font-weight: bold; 
+        background: #f8f9fa; 
+        min-width: 160px; 
+        position: sticky; 
+        left: 0; 
+        z-index: 2; 
+        border-right: 2px solid var(--light-gray);
+    }
+
+    /* Estilos de Celdas según turno */
+    .shift-cell { cursor: pointer; transition: 0.2s; font-weight: bold; }
+    .shift-cell:hover { filter: brightness(0.9); transform: scale(1.05); }
+
+    .morning { background-color: var(--morning) !important; color: #155724; }
+    .afternoon { background-color: var(--afternoon) !important; color: #004085; }
+    .night { background-color: var(--night) !important; color: #721c24; }
+    .rest { background-color: var(--rest-day) !important; color: #856404; }
+
+    /* Modal */
+    #editModal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000;
+    }
+    .modal-content {
+      background: white; padding: 2rem; border-radius: 15px; width: 320px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 { color: var(--primary); margin-bottom: 5px; }
+    .modal-content select { width: 100%; padding: 0.8rem; margin: 1.5rem 0; border-radius: 8px; border: 1px solid var(--light-gray); font-size: 1rem; }
+    .btn-save { background: var(--success); color: white; border: none; padding: 0.8rem; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 10px; }
+    .btn-close { background: #666; color: white; border: none; padding: 0.8rem; border-radius: 8px; cursor: pointer; width: 100%; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div"><i class="fas fa-gas-pump"></i> Cervasa Admin</div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="liquidacion.html">Gasolinera</a>
+        <a href="stock_tienda.html" class="active">Tienda</a>
+      </div>
+      <a href="../sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 style="text-align:center; margin-bottom: 20px; color: var(--primary);">Gestión de Horarios</h1>
+    
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button class="btn-nav" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i> Anterior</button>
+        <h2 id="currentMonthYear">Mes Año</h2>
+        <button class="btn-nav" onclick="changeMonth(1)">Siguiente <i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <table id="horarioTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <div id="editModal">
+    <div class="modal-content">
+      <h3 id="editEmployee">Empleado</h3>
+      <p id="editDate" style="color: #666;">Fecha</p>
+      <select id="shiftSelect">
+        <option value="morning">Mañana (M)</option>
+        <option value="afternoon">Tarde (T)</option>
+        <option value="night">Noche (N)</option>
+        <option value="rest">Descanso (D)</option>
+      </select>
+      <button class="btn-save" onclick="saveShift()">Guardar Turno</button>
+      <button class="btn-close" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    let date = new Date();
+    let currentMonth = date.getMonth();
+    let currentYear = date.getFullYear();
+    let editingData = null; 
+
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    const empleados = ["Juan Pérez", "María López", "Carlos Ramírez", "Ana Martínez", "Pedro Gómez"];
+
+    // TRADUCTOR DE LETRAS (Evita la 'A' de Afternoon)
+    function obtenerLetraTurno(claseTurno) {
+      switch(claseTurno) {
+        case 'morning': return 'M';
+        case 'afternoon': return 'T'; // T de Tarde
+        case 'night': return 'N';
+        case 'rest': return 'D';    // D de Descanso
+        default: return '-';
+      }
+    }
+
+    // Obtener datos guardados o generar aleatorios la primera vez
+    function getScheduleData() {
+      const storageKey = `cervasa_sched_${currentYear}_${currentMonth}`;
+      let saved = localStorage.getItem(storageKey);
+      
+      if (saved) {
+        return JSON.parse(saved);
+      } else {
+        let newData = {};
+        const opciones = ['morning', 'afternoon', 'night', 'rest'];
+        
+        empleados.forEach(emp => {
+          newData[emp] = {};
+          const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+          for(let d = 1; d <= daysInMonth; d++) {
+            // Genera uno aleatorio solo la primera vez que se crea el mes
+            const randomShift = opciones[Math.floor(Math.random() * opciones.length)];
+            newData[emp][d] = randomShift; 
+          }
+        });
+        localStorage.setItem(storageKey, JSON.stringify(newData));
+        return newData;
+      }
+    }
+
+    function renderCalendar() {
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      document.getElementById('currentMonthYear').textContent = `${meses[currentMonth]} ${currentYear}`;
+      
+      const scheduleData = getScheduleData();
+
+      // Generar Cabecera (Días del mes)
+      const thead = document.getElementById('tableHead');
+      let headHTML = `<tr><th class="employee-name">Empleado</th>`;
+      for (let i = 1; i <= daysInMonth; i++) {
+        headHTML += `<th>${i}</th>`;
+      }
+      headHTML += `</tr>`;
+      thead.innerHTML = headHTML;
+
+      // Generar Cuerpo (Filas de empleados)
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      empleados.forEach(emp => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td class="employee-name">${emp}</td>`;
+        
+        for (let d = 1; d <= daysInMonth; d++) {
+          const shiftKey = scheduleData[emp][d] || 'morning';
+          const cell = document.createElement('td');
+          cell.className = `shift-cell ${shiftKey}`;
+          
+          // Aquí ponemos la letra corregida (T para tarde)
+          cell.textContent = obtenerLetraTurno(shiftKey);
+          
+          cell.onclick = () => openModal(emp, d, shiftKey);
+          row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+      });
+    }
+
+    function changeMonth(dir) {
+      currentMonth += dir;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    }
+
+    function openModal(emp, day, currentShift) {
+      editingData = { emp, day };
+      document.getElementById('editEmployee').textContent = emp;
+      document.getElementById('editDate').textContent = `${day} de ${meses[currentMonth]}`;
+      document.getElementById('shiftSelect').value = currentShift;
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+
+    function saveShift() {
+      const newShift = document.getElementById('shiftSelect').value;
+      const storageKey = `cervasa_sched_${currentYear}_${currentMonth}`;
+      let data = JSON.parse(localStorage.getItem(storageKey));
+
+      // Guardar el cambio del administrador
+      data[editingData.emp][editingData.day] = newShift;
+      localStorage.setItem(storageKey, JSON.stringify(data));
+
+      closeModal();
+      renderCalendar(); 
+    }
+
+    window.onload = renderCalendar;
+  </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cierre/Apertura Tienda - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+   
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 5%;
+    }
+
+    .status-banner {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-left: 5px solid var(--success);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .section-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-card h2 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--light-gray);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #555; }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .total-highlight {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    .total-highlight span { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+
+    .btn-container { display: flex; gap: 1rem; margin-top: 2rem; }
+    
+    .btn {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-success { background: var(--success); color: white; }
+
+    @media (max-width: 600px) {
+      .grid-form { grid-template-columns: 1fr; }
+      .btn-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-store"></i>
+        <span>Cervasa Store</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="surtidora.html">Gasolinera</a>
+        <a href="#" class="active">Cierre Tienda</a>
+      </div>
+      <div class="auth-links">
+        <a href="../sesion.html" onclick="logoutUsuario(); return false;" style="color:white; text-decoration:none;"><i class="fas fa-sign-out-alt"></i> Salir</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="status-banner">
+      <div>
+        <strong>Estado:</strong> <span style="color: var(--success);">Turno en Proceso</span><br>
+        <small>Cajero: Martha Quiñones</small>
+      </div>
+      <div style="text-align: right;">
+        <strong>Turno:</strong> Tarde<br>
+        <small>24 Feb 2026</small>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2><i class="fas fa-cash-register"></i> Arqueo de Caja (Efectivo)</h2>
+      <div class="grid-form">
+        <div class="form-group">
+          <label>Fondo de Apertura</label>
+          <input type="text" value="$200.000" readonly style="background: #eee;">
+        </div>
+        <div class="form-group">
+          <label>Ventas Efectivo Sistema</label>
+          <input type="text" value="$1.450.000" readonly style="background: #eee;">
+        </div>
+        <div class="form-group">
+          <label>Efectivo Físico en Caja</label>
+          <input type="number" placeholder="$ 0.00">
+        </div>
+        <div class="form-group">
+          <label>Gastos / Salidas</label>
+          <input type="number" placeholder="$ 0.00">
+        </div>
+      </div>
+      <div class="total-highlight">
+        Diferencia: <span style="color: var(--danger);">-$2.500</span>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2><i class="fas fa-credit-card"></i> Otros Medios de Pago</h2>
+      <div class="grid-form">
+        <div class="form-group">
+          <label>Ventas Datáfono (Vouchers)</label>
+          <input type="number" placeholder="Total vouchers">
+        </div>
+        <div class="form-group">
+          <label>Transferencias (Nequi/Daviplata)</label>
+          <input type="number" placeholder="Total transferencias">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2><i class="fas fa-clipboard-check"></i> Novedades de Turno</h2>
+      <div class="form-group">
+        <label>Observaciones o Incidentes</label>
+        <textarea rows="3" style="width: 100%; border-radius: 8px; border: 1px solid var(--light-gray); padding: 0.8rem;" placeholder="Ej: Se recibió pedido de gaseosas, faltó un ítem..."></textarea>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <button class="btn btn-primary"><i class="fas fa-save"></i> Guardar Borrador</button>
+      <button class="btn btn-success"><i class="fas fa-check-double"></i> Finalizar Cierre de Turno</button>
+    </div>
+  </main>
+
+  <script src="../utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof requiereAutenticacion === 'function') {
+        requiereAutenticacion('sesion.html');
+      }
+    });
+  </script>
+</body>
+</html>
