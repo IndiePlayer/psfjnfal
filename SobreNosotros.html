@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cervasa - Sobre Nosotros</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .about-hero {
+      text-align: center;
+      padding: 6rem 6% 3rem;
+      background: white;
+    }
+
+    .about-hero h1 {
+      font-size: 3.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .about-hero p {
+      font-size: 1.3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      color: #555;
+    }
+
+    .main-about {
+      padding: 4rem 6%;
+      background: white;
+    }
+
+    .section-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+      align-items: center;
+    }
+
+    .text-block h2 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .text-block p {
+      font-size: 1.15rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .logo-placeholder, .photo-placeholder {
+      background: var(--light-gray);
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #777;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .pillars {
+      background: var(--light-gray);
+      padding: 2.5rem;
+      border-radius: 12px;
+      margin: 3rem 0;
+    }
+
+    .pillars h3 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .pillars ul {
+      list-style: none;
+    }
+
+    .pillars li {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .pillars li strong {
+      color: var(--primary);
+    }
+
+    .mission-vision {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .mission, .vision {
+      background: white;
+      padding: 2rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 12px;
+    }
+
+    .mission h3, .vision h3 {
+      color: var(--primary);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .section-split, .mission-vision {
+        grid-template-columns: 1fr;
+      }
+      .about-hero h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Cervasa</div>
+    <div class="nav-links">
+      <a href="inico.html">Inicio</a>
+      <a href="SobreNosotros.html" class="active">¿Quiénes somos?</a>
+      <a href="ubicacion.html">Dónde nos ubicamos</a>
+      <a href="tienda.html">Tienda</a>
+      <a href="politicas.html">Políticas</a>
+      <a href="lubricante.html">Lubricantes</a>
+    </div>
+    <div class="auth-links">
+      <a href="registrarse.html">Registrarse</a> / <a href="sesion.html">Iniciar sesión</a>
+    </div>
+  </nav>
+</header>
+
+<section class="about-hero">
+  <h1>Sobre nosotros</h1>
+  <p>Tradición en servicio, vanguardia en energía. Creemos que el éxito de una ruta depende de la calidad de su origen.</p>
+</section>
+
+<section class="main-about">
+  <div class="section-split">
+    <div class="text-block">
+      <h2>¿Quiénes somos?</h2>
+      <p>En Cervasa, no solo gestionamos estaciones de servicio; construimos los puntos de confianza donde comienza cada gran viaje.</p>
+      <p>Nacimos con la visión de transformar la parada técnica en una experiencia de valor, combinando la precisión operativa con un compromiso inquebrantable hacia quienes mueven el mundo: nuestros clientes.</p>
+      <p>Nuestra identidad se define por la búsqueda constante de la excelencia. Desde la selección de nuestros suministros hasta la formación especializada de nuestro personal, cada detalle en Cervasa está alineado para ofrecer seguridad, transparencia y eficiencia en cada litro.</p>
+    </div>
+    <div class="logo-placeholder">Logo de Cervasa</div> <!-- Reemplaza con <img src="tu-logo.png" alt="Logo Cervasa"> -->
+  </div>
+
+  <div class="pillars">
+    <h3>Nuestros pilares fundamentales</h3>
+    <ul>
+      <li><strong>Integridad Tecnológica:</strong> Implementamos sistemas de última generación que garantizan procesos exactos y fluidos.</li>
+      <li><strong>Cercanía Real:</strong> Somos un equipo humano dedicado a facilitar su camino, priorizando siempre un trato amable y profesional.</li>
+      <li><strong>Responsabilidad Operativa:</strong> Mantenemos estándares rigurosos de seguridad y cuidado ambiental en todas nuestras instalaciones.</li>
+      <li><strong>Evolución Constante:</strong> Nos adaptamos a las nuevas necesidades de movilidad para seguir siendo su aliado estratégico en carretera.</li>
+    </ul>
+  </div>
+
+  <div class="section-split">
+    <div class="photo-placeholder">
+      <img src="https://thumbs.dreamstime.com/b/happy-factory-workers-group-clothing-inside-production-area-45444487.jpg" alt="Foto del equipo Cervasa">
+    </div>
+    <div class="photo-placeholder">
+      <img src="https://thumbs.dreamstime.com/b/modern-shell-gas-station-convenience-store-sunset-featuring-sleek-design-captured-illuminated-canopy-provides-374203270.jpg" alt="Foto de la empresa/estación Cervasa">
+    </div>
+  </div>
+
+  <div class="mission-vision">
+    <div class="mission">
+      <h3>Nuestra Misión</h3>
+      <p>Proveer soluciones energéticas con los más altos estándares de calidad, asegurando que cada parada en nuestras estaciones se traduzca en tiempo optimizado y confianza plena para el conductor.</p>
+    </div>
+    <div class="vision">
+      <h3>Nuestra Visión</h3>
+      <p>Consolidarnos como la red de estaciones de servicio referente por su innovación y calidez, siendo la primera opción de quienes buscan no solo combustible, sino un servicio integral de excelencia.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-container">
+    <div>
+      <div class="footer-logo">Cervasa SAS</div>
+      <p>2026 © Derechos reservados</p>
+    </div>
+
+    <div>
+      <h4>¿Quiénes somos?</h4>
+      <ul style="list-style:none; margin-top:1rem;">
+        <li><a href="SobreNosotros.html" style="color:white; text-decoration:none;">Misión y Visión</a></li>
+        <li><a href="politicas.html" style="color:white; text-decoration:none;">Políticas de la empresa y Manejo de datos personales</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>¡Contáctanos!</h4>
+      <p style="margin:1rem 0;">Número de teléfono<br>Correo electrónico<br>Ubicación</p>
+      <div class="social-links">
+        <a href="https://facebook.com" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://instagram.com" class="instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com" class="Twitter"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    Cervasa SAS • 2026 • Todos los derechos reservados
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      background: var(--gray-bg);
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      position: relative;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      background: var(--light-gray);
+      border-radius: 50%;
+      margin: 0 auto 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: var(--primary);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,98,0,0.15);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-10%);
+      cursor: pointer;
+      color: #777;
+      font-size: 1.3rem;
+      background: white;
+      padding: 0 8px;
+    }
+
+    .password-toggle:hover {
+      color: var(--primary);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0 1.5rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.9rem 2.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .btn-primary:hover {
+      background: #002850;
+    }
+
+    .btn-secondary {
+      background: var(--accent);
+      color: white;
+      flex: 1;
+      max-width: 200px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-secondary:hover {
+      background: #e55a00;
+    }
+
+    .forgot-password {
+      display: block;
+      margin-top: 1rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+      color: var(--accent);
+    }
+
+    .background-image {
+      margin-top: 4rem;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .background-image img {
+      max-width: 100%;
+      max-height: 280px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    @media (max-width: 600px) {
+      .login-card {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      input {
+        font-size: 16px; /* Evita zoom en iOS */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">Cervasa</div>
+      <div class="nav-links">
+        <a href="inico.html">Inicio</a>
+        <a href="SobreNosotros.html">¿Quiénes somos?</a>
+        <a href="ubicacion.html">Dónde nos ubicamos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="politicas.html">Políticas</a>
+        <a href="lubricante.html">Lubricantes</a>
+      </div>
+      <div class="auth-links">
+        <a href="registrarse.html">Registrarse</a> / <a href="sesion.html" class="active">Iniciar sesión</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="welcome">
+      <h1>Bienvenido a Cervasa!</h1>
+    </div>
+
+    <div class="login-card">
+      <h2>Iniciar Sesión</h2>
+
+      <div class="avatar">
+        <i class="fas fa-user"></i>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Correo electrónico o usuario</label>
+          <input type="email" id="email" placeholder="ejemplo@cervasa.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+          <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+        </div>
+
+        <div id="formMessage" class="form-message"></div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+          <a href="registrarse.html" class="btn btn-secondary">Registrarse</a>
+        </div>
+
+        <a href="#" class="forgot-password">¿Olvidaste la Contraseña?</a>
+      </form>
+    </div>
+
+    <div class="background-image">
+      <img src="https://images.unsplash.com/photo-1506529131273-9d976d02e55d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Imagen de Cervasa">
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <div class="footer-logo">Cervasa SAS</div>
+        <p>2026 © Derechos reservados</p>
+      </div>
+
+      <div>
+        <h4>¿Quiénes somos?</h4>
+        <ul style="list-style:none; margin-top:1rem;">
+          <li><a href="SobreNosotros.html" style="color:white; text-decoration:none;">Misión y Visión</a></li>
+          <li><a href="politicas.html" style="color:white; text-decoration:none;">Políticas de la empresa y Manejo de datos personales</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>¡Contáctanos!</h4>
+        <p style="margin:1rem 0;">Número de teléfono<br>Correo electrónico<br>Ubicación</p>
+        <div class="social-links">
+          <a href="https://facebook.com" class="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com" class="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Cervasa SAS • 2026 • Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#password');
+      const loginForm = document.getElementById('loginForm');
+      const formMessage = document.getElementById('formMessage');
+
+      // Toggle de contraseña
+      if (togglePassword && password) {
+        togglePassword.addEventListener('click', function () {
+          const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+          password.setAttribute('type', type);
+          this.classList.toggle('fa-eye');
+          this.classList.toggle('fa-eye-slash');
+        });
+      }
+
+      // Validación del formulario
+      loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const pass = password.value;
+
+        limpiarMensaje(formMessage);
+
+        if (!email) {
+          mostrarError('Ingresa tu correo o usuario', formMessage);
+          return;
+        }
+
+        if (!pass) {
+          mostrarError('Ingresa tu contraseña', formMessage);
+          return;
+        }
+
+        // Deshabilitar botón mientras se procesa
+        habilitarFormulario(loginForm, false);
+        mostrarInfo('Verificando credenciales...', formMessage);
+
+        // Simular validación con API (aquí iría tu backend real)
+        setTimeout(() => {
+          // Usuarios de prueba
+          const usuariosValidos = {
+            'admin@cervasa.com': 'admin123',
+            'gerente@cervasa.com': 'gerente123'
+          };
+
+          if (usuariosValidos[email] === pass) {
+            mostrarExito('¡Bienvenido! Acceso concedido...', formMessage);
+            
+            // Guardar sesión
+            loginUsuario({
+              nombre: email.split('@')[0],
+              email: email,
+              rol: email.includes('admin') ? 'admin' : 'gerente',
+              id: Math.random().toString(36).substr(2, 9)
+            });
+
+            setTimeout(() => {
+              window.location.href = 'admin.html';
+            }, 1500);
+          } else {
+            mostrarError('Correo o contraseña incorrectos', formMessage);
+            habilitarFormulario(loginForm, true);
+          }
+        }, 1000);
+      });
+    });
+  </script>
+
+</body>
+</html>

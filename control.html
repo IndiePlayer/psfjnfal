@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Control de Inventario Crítico - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f4f7f6;
+      --text: #333;
+      --accent: #ff6200;
+      --danger: #dc3545;
+      --success: #28a745;
+      --white: #ffffff;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+    }
+
+    /* --- NAVEGACIÓN --- */
+    header {
+      background: var(--primary);
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .logo-div { color: white; font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    .nav-links a { color: #ffffff !important; text-decoration: none; margin: 0 1rem; font-weight: 600; }
+    .nav-links a:hover { color: var(--accent) !important; }
+
+    /* --- CONTENIDO --- */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 5%; }
+
+    .top-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem; margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--white); padding: 1.5rem; border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+      text-align: center;
+    }
+
+    .stat-card.alert { border-top-color: var(--danger); }
+    .stat-card h3 { font-size: 0.85rem; color: #666; text-transform: uppercase; margin-bottom: 10px; }
+    .stat-card p { font-size: 1.8rem; font-weight: bold; }
+
+    .inventory-section {
+      background: var(--white); border-radius: 12px; padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px; background: #f8f9fa; color: var(--primary); font-size: 0.9rem; }
+    td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+
+    .diff-badge {
+      padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;
+    }
+    .negative { background: #ffebee; color: var(--danger); }
+    .positive { background: #e8f5e9; color: var(--success); }
+
+    .btn-action {
+      background: var(--primary); color: white; border: none; padding: 8px 15px;
+      border-radius: 6px; cursor: pointer; font-weight: bold;
+    }
+
+    .btn-action:hover { background: var(--accent); }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div"><i class="fas fa-boxes"></i> Cervasa Admin</div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="#" class="active">Control de Faltantes</a>
+      </div>
+      <a href="sesion.html" style="color:white; text-decoration:none;">Cerrar Sesión</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="section-header">
+      <h1>Conciliación de Inventario</h1>
+      <button class="btn-action" onclick="alert('Iniciando conteo físico...')">
+        <i class="fas fa-clipboard-check"></i> Nuevo Conteo Físico
+      </button>
+    </div>
+
+    <div class="top-stats">
+      <div class="stat-card alert">
+        <h3>Faltante Estimado (Mes)</h3>
+        <p style="color: var(--danger);">$185,400</p>
+      </div>
+      <div class="stat-card">
+        <h3>Efectividad de Inventario</h3>
+        <p>98.2%</p>
+      </div>
+      <div class="stat-card">
+        <h3>Producto más crítico</h3>
+        <p style="font-size: 1.2rem;">Lubricante 20W-50</p>
+      </div>
+    </div>
+
+    <div class="inventory-section">
+      <h2>Items de Alto Valor y Rotación</h2>
+      <p style="color: #666; margin-bottom: 1.5rem;">Comparativa entre lo que el sistema dice (Ventas) y lo que hay en estante (Conteo).</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Stock Sistema</th>
+            <th>Conteo Real</th>
+            <th>Diferencia</th>
+            <th>Costo de Pérdida</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cerveza Club Colombia 330ml</strong></td>
+            <td>144</td>
+            <td>140</td>
+            <td><span class="diff-badge negative">-4</span></td>
+            <td style="color: var(--danger);">-$18,000</td>
+            <td><button class="btn-action">Ajustar</button></td>
+          </tr>
+          <tr>
+            <td><strong>Aceite Castrol 4T</strong></td>
+            <td>12</td>
+            <td>11</td>
+            <td><span class="diff-badge negative">-1</span></td>
+            <td style="color: var(--danger);">-$25,000</td>
+            <td><button class="btn-action">Ajustar</button></td>
+          </tr>
+          <tr>
+            <td><strong>Gaseosa Pepsi 1.5L</strong></td>
+            <td>24</td>
+            <td>24</td>
+            <td><span class="diff-badge positive">0</span></td>
+            <td>$0</td>
+            <td><button class="btn-action" style="background: #ccc;">OK</button></td>
+          </tr>
+          <tr>
+            <td><strong>Cigarrillos (Paquete x20)</strong></td>
+            <td>50</td>
+            <td>47</td>
+            <td><span class="diff-badge negative">-3</span></td>
+            <td style="color: var(--danger);">-$36,000</td>
+            <td><button class="btn-action">Ajustar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</body>
+</html>

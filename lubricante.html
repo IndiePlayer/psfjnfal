@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lubricantes - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero-lubricantes {
+      background: var(--primary);
+      color: white;
+      padding: 7rem 5% 4.5rem;
+      text-align: center;
+    }
+
+    .hero-lubricantes h1 {
+      font-size: 2.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-lubricantes p.subtitle {
+      font-size: 1.35rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    .intro-text {
+      padding: 3rem 5% 2rem;
+      background: var(--gray-bg);
+      text-align: center;
+      font-size: 1.25rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .intro-text strong {
+      color: var(--primary);
+    }
+
+    .main-content {
+      padding: 4rem 5% 6rem;
+      background: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 0;
+      scroll-behavior: smooth;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-card {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      background: var(--gray-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .product-image-container {
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+    }
+
+    .product-image-container img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+    }
+
+    .product-info {
+      padding: 3rem 3rem 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-info h3 {
+      color: var(--primary);
+      font-size: 2.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .product-info p {
+      font-size: 1.15rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .product-info ul {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .product-info ul li {
+      margin-bottom: 0.9rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 1.08rem;
+    }
+
+    .product-info ul li::before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .price {
+      font-size: 1.9rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-top: 1.8rem;
+    }
+
+    .nav-arrows {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .arrow {
+      background: rgba(0, 51, 102, 0.85);
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      user-select: none;
+    }
+
+    .arrow:hover {
+      background: var(--accent);
+      transform: scale(1.15);
+      box-shadow: 0 10px 30px rgba(255,98,0,0.4);
+    }
+
+    .arrow.prev {
+      margin-left: -35px;
+    }
+
+    .arrow.next {
+      margin-right: -35px;
+    }
+
+    @media (max-width: 900px) {
+      .product-card {
+        grid-template-columns: 1fr;
+      }
+      .product-image-container {
+        padding: 2rem 1rem;
+        height: auto;
+      }
+      .product-info {
+        padding: 2.5rem 2rem;
+      }
+      .hero-lubricantes h1 {
+        font-size: 2.4rem;
+      }
+      .arrow {
+        width: 60px;
+        height: 60px;
+        font-size: 2.2rem;
+      }
+      .arrow.prev { margin-left: 10px; }
+      .arrow.next { margin-right: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">Cervasa</div>
+      <div class="nav-links">
+        <a href="inico.html">Inicio</a>
+        <a href="SobreNosotros.html">¿Quiénes somos?</a>
+        <a href="ubicacion.html">Dónde nos ubicamos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="politicas.html">Políticas</a>
+        <a href="lubricante.html" class="active">Lubricantes</a>
+      </div>
+      <div class="auth-links">
+        <a href="registrarse.html">Registrarse</a> / <a href="sesion.html">Iniciar sesión</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero-lubricantes">
+    <h1>Lubricantes</h1>
+    <p class="subtitle">Protección y rendimiento superior para tu motor</p>
+  </section>
+
+  <div class="intro-text">
+    <p><strong>Ofrecemos distintas opciones de lubricantes</strong>, todos de la mejor calidad para tu motor.</p>
+  </div>
+
+  <section class="main-content">
+    <div class="container">
+
+      <div class="carousel-wrapper">
+        <div class="carousel" id="carousel-lubricantes">
+
+          <!-- Lubricante 1 -->
+          <div class="product-card">
+            <div class="product-image-container">
+              <img src="https://images.unsplash.com/photo-1628248286073-3d7d4d0d6d8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mobil Super 2T 1L">
+            </div>
+            <div class="product-info">
+              <h3>Mobil Super 2T (1L)</h3>
+              <p>Rendimiento y limpieza para su motor de dos tiempos.</p>
+              <ul>
+                <li><strong>Descripción:</strong> Lubricante mineral de alta calidad diseñado para ofrecer una combustión limpia y proteger las piezas críticas del motor contra el desgaste y la corrosión. Su fórmula pre-diluida facilita una mezcla instantánea con el combustible.</li>
+                <li><strong>Ideal para:</strong> Motocicletas, scooters, cortadoras de césped y motosierras con motores de 2 tiempos.</li>
+              </ul>
+              <span class="price">Precio: $30.000</span>
+            </div>
+          </div>
+
+          <!-- Lubricante 2 (ejemplo) -->
+          <div class="product-card">
+            <div class="product-image-container">
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Castrol Power 1 4T">
+            </div>
+            <div class="product-info">
+              <h3>Castrol Power 1 4T 10W-40 (1L)</h3>
+              <p>Excelente protección para motores de cuatro tiempos de alta exigencia.</p>
+              <ul>
+                <li><strong>Descripción:</strong> Aceite semisintético con tecnología Trizone que protege motor, embrague y caja de cambios.</li>
+                <li><strong>Ideal para:</strong> Motocicletas deportivas y de alto cilindraje.</li>
+              </ul>
+              <span class="price">Precio: $48.000</span>
+            </div>
+          </div>
+
+          <!-- Agrega más tarjetas aquí -->
+
+        </div>
+
+        <div class="nav-arrows">
+          <div class="arrow prev" onclick="scrollCarousel('carousel-lubricantes', -1)">‹</div>
+          <div class="arrow next" onclick="scrollCarousel('carousel-lubricantes', 1)">›</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <div class="footer-logo">Cervasa SAS</div>
+        <p>2026 © Derechos reservados</p>
+      </div>
+
+      <div>
+        <h4>¿Quiénes somos?</h4>
+        <ul style="list-style:none; margin-top:1rem;">
+          <li><a href="SobreNosotros.html" style="color:white; text-decoration:none;">Misión y Visión</a></li>
+          <li><a href="politicas.html" style="color:white; text-decoration:none;">Políticas de la empresa y Manejo de datos personales</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>¡Contáctanos!</h4>
+        <p style="margin:1rem 0;">Número de teléfono<br>Correo electrónico<br>Ubicación</p>
+        <div class="social-links">
+          <a href="https://facebook.com" class="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com" class="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Cervasa SAS • 2026 • Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script>
+    function scrollCarousel(id, direction) {
+      const carousel = document.getElementById(id);
+      const scrollAmount = carousel.clientWidth * direction;
+      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>

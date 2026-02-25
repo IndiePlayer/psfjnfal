@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auditoría de Usuarios - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+   
+
+    .logo-div { font-size: 1.5rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+
+    
+
+    .nav-links a:hover { 
+      color: var(--accent) !important; 
+    }
+
+    .nav-links a.active { color: var(--accent) !important; }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.15);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      color: white !important;
+      text-decoration: none;
+    }
+
+    /* --- CONTENIDO DE AUDITORÍA --- */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 5%; }
+
+    h1 { color: var(--primary); margin-bottom: 2rem; text-align: center; }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--primary);
+    }
+
+    .stat-card h3 { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
+    .stat-card p { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+    }
+
+    .table-tools {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      width: 300px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 10px 10px 35px;
+      border-radius: 8px;
+      border: 1px solid var(--light-gray);
+    }
+
+    .search-box i { position: absolute; left: 10px; top: 12px; color: #999; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px; border-bottom: 2px solid var(--gray-bg); color: var(--primary); font-size: 0.9rem; }
+    td { padding: 12px; border-bottom: 1px solid var(--gray-bg); font-size: 0.9rem; }
+    
+    .badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .badge-login { background: #e3f2fd; color: #1976d2; }
+    .badge-edit { background: #fff3e0; color: #f57c00; }
+    .badge-delete { background: #ffebee; color: #c62828; }
+
+    .user-info { display: flex; align-items: center; gap: 10px; }
+    .user-avatar { width: 30px; height: 30px; background: var(--light-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; color: var(--primary); }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      
+      <div class="logo-div"><i class="fas fa-user-shield"></i> Cervasa Admin</div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="horarioypersonal.html">Personal</a>
+        <a href="#" class="active">Auditoría de Seguridad</a>
+      </div>
+      <a href="sesion.html" class="logout-btn">Salir</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Registro de Actividad de Usuarios</h1>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <h3>Inicios de Sesión (Hoy)</h3>
+        <p>24</p>
+      </div>
+      <div class="stat-card" style="border-left-color: var(--accent);">
+        <h3>Acciones Críticas</h3>
+        <p>5</p>
+      </div>
+      <div class="stat-card" style="border-left-color: var(--success);">
+        <h3>Usuarios Activos</h3>
+        <p>8</p>
+      </div>
+    </div>
+
+    <div class="table-container" style="overflow-x: auto;">
+      <div class="table-tools">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Buscar usuario o acción..." id="searchAudit">
+        </div>
+        <button class="logout-btn" style="background: var(--primary);" onclick="window.print()">
+          <i class="fas fa-print"></i> Exportar Log
+        </button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Módulo</th>
+            <th>Detalle</th>
+            <th>IP / Dispositivo</th>
+            <th>Fecha y Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">AD</div>
+                <span>Admin_Cervasa</span>
+              </div>
+            </td>
+            <td><span class="badge badge-login">LOGIN</span></td>
+            <td>Sistema Central</td>
+            <td>Inicio de sesión exitoso</td>
+            <td>192.168.1.45 (PC-Oficina)</td>
+            <td>22/05/2024 07:00 AM</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">ML</div>
+                <span>Maria_Lopez</span>
+              </div>
+            </td>
+            <td><span class="badge badge-edit">EDICIÓN</span></td>
+            <td>Stock Tienda</td>
+            <td>Modificó cantidad de "Gaseosa 1L"</td>
+            <td>192.168.1.12 (Tablet-Isla)</td>
+            <td>22/05/2024 08:32 AM</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="user-info">
+                <div class="user-avatar">JP</div>
+                <span>Juan_Perez</span>
+              </div>
+            </td>
+            <td><span class="badge badge-delete">ELIMINAR</span></td>
+            <td>Horarios</td>
+            <td>Eliminó turno de "Pedro Gómez"</td>
+            <td>186.12.44.102 (Remoto)</td>
+            <td>22/05/2024 09:15 AM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script src="utils.js"></script>  
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrar Medición - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-gas-pump"></i>
+        <span>Cervasa</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard Admin</a>
+        <a href="#gasoline-management" class="active">Gasolinera</a>
+        <a href="#store-management">Tienda</a>
+      </div>
+      <div class="auth-links">
+        <a href="sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Registrar Medición</h1>
+
+    <div class="form-container">
+      <form>
+
+        <div class="form-group">
+          <label for="tanque">Seleccionar Tanque</label>
+          <select id="tanque" required>
+            <option value="">Seleccionar Tanque...</option>
+            <option value="tanque1">Tanque 1</option>
+            <option value="tanque2">Tanque 2</option>
+            <option value="tanque3">Tanque 3</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Capacidad máxima del tanque</label>
+          <input type="text" placeholder="Capacidad máxima del tanque" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="medida-combustible">Medida de combustible (cm/pulg)</label>
+          <input type="number" id="medida-combustible" step="0.1" placeholder="Ingrese medida en cm o pulg" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nivel-agua">Nivel de Agua (cm/pulg)</label>
+          <input type="number" id="nivel-agua" step="0.1" placeholder="Ingrese nivel de agua" required>
+        </div>
+
+        <div class="truck-section">
+          <label>Se recibió Camión Sisterna?:</label>
+          <div class="truck-buttons">
+            <button type="button" class="btn-toggle yes" id="si-sisterna">SI</button>
+            <button type="button" class="btn-toggle no active" id="no-sisterna">NO</button>
+          </div>
+          <input type="text" id="plate-field" placeholder="Número de placa" maxlength="10">
+        </div>
+
+        <div class="action-buttons">
+          <button type="submit" class="btn-action btn-save">Registrar la medición</button>
+          <button type="button" class="btn-action btn-cancel">Cancelar registro</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo-section">
+        <div class="footer-logo">
+          <i class="fas fa-gas-pump"></i>
+        </div>
+        <p><strong>Cervasa SAS</strong></p>
+        <p>© 2026</p>
+        <p>Derechos reservados</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>¿Quiénes somos?</h4>
+        <a href="SobreNosotros.html">Misión y Visión</a>
+        <a href="politicas.html">Políticas de la empresa</a>
+      </div>
+
+      <div class="footer-section">
+        <h4>¡Contáctanos!</h4>
+        <p>Teléfono: +57 (1) XXXX XXXX</p>
+        <p>Correo: info@cervasa.com</p>
+        <p><a href="ubicacion.html">Ver ubicación</a></p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Síguenos</h4>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#"><i class="fab fa-x-twitter"></i> Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Cervasa SAS © 2026 • Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script>
+    // Toggle SI / NO para camión cisterna
+    const siBtn = document.getElementById('si-sisterna');
+    const noBtn = document.getElementById('no-sisterna');
+    const plateField = document.getElementById('plate-field');
+
+    function toggleSisterna(activeBtn, inactiveBtn) {
+      activeBtn.classList.add('active');
+      inactiveBtn.classList.remove('active');
+      plateField.style.display = activeBtn.id === 'si-sisterna' ? 'block' : 'none';
+      if (activeBtn.id === 'si-sisterna') {
+        plateField.required = true;
+      } else {
+        plateField.required = false;
+        plateField.value = '';
+      }
+    }
+
+    siBtn.addEventListener('click', () => toggleSisterna(siBtn, noBtn));
+    noBtn.addEventListener('click', () => toggleSisterna(noBtn, siBtn));
+
+    // Por defecto: NO seleccionado
+    toggleSisterna(noBtn, siBtn);
+
+    // Protección de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+      requiereAutenticacion('sesion.html');
+    });
+  </script>
+
+</body>
+</html>

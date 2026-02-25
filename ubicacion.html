@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dónde nos ubicamos - Cervasa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero-location {
+      background: var(--primary);
+      color: white;
+      padding: 7rem 5% 4rem;
+      text-align: center;
+    }
+
+    .hero-location h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-location .intro-text {
+      font-size: 1.35rem;
+      margin: 1.5rem 0 0.5rem;
+      font-weight: 500;
+    }
+
+    .main-content {
+      background: var(--gray-bg);
+      padding: 3rem 5% 6rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .location-section {
+      text-align: center;
+    }
+
+    .location-section h2 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .map-container {
+      width: 100%;
+      max-width: 1000px;
+      height: 520px;
+      margin: 0 auto 2.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      border: 1px solid var(--light-gray);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .address-info {
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .address-info strong {
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .hero-location h1 {
+        font-size: 2.3rem;
+      }
+
+      .map-container {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">Cervasa</div>
+      <div class="nav-links">
+        <a href="inico.html">Inicio</a>
+        <a href="SobreNosotros.html">¿Quiénes somos?</a>
+        <a href="ubicacion.html" class="active">Dónde nos ubicamos</a>
+        <a href="tienda.html">Tienda</a>
+        <a href="politicas.html">Políticas</a>
+        <a href="lubricante.html">Lubricantes</a>
+      </div>
+      <div class="auth-links">
+        <a href="registrarse.html">Registrarse</a> / <a href="sesion.html">Iniciar sesión</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero-location">
+    <h1>Dónde nos ubicamos</h1>
+    <div class="intro-text">Nos ubicamos en:</div>
+  </section>
+
+  <section class="main-content">
+    <div class="container">
+
+      <div class="location-section">
+        <div class="address-info">
+          <p><strong>Estación de Servicio Cervasa Puerto Gaitán</strong></p>
+          <p>Vía principal Puerto Gaitán – Villavicencio (tramo urbano)</p>
+          <p>Puerto Gaitán, Meta, Colombia</p>
+          <p>Horario: Lunes a Domingo 5:00 a.m. – 11:00 p.m.</p>
+        </div>
+
+        <div class="map-container">
+          <!-- Mapa embebido de Google Maps - puedes reemplazar con la ubicación exacta si tienes coordenadas precisas -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1990.580272272473!2d-71.6602547075435!3d3.7752246733470916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zM8KwNDYnMzAuOCJOIDcxwrAzOScyOC42Ilc!5e0!3m2!1ses-419!2sco!4v1771946254119!5m2!1ses-419!2sco" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <p style="font-size: 1.1rem; color: #555; max-width: 800px; margin: 2rem auto 0;">
+          Estamos ubicados estratégicamente en Puerto Gaitán, Meta, para servir a transportistas, viajeros y residentes de la zona petrolera. ¡Te esperamos en nuestra estación para acompañarte en tu camino!
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <div class="footer-logo">Cervasa SAS</div>
+        <p>2026 © Derechos reservados</p>
+      </div>
+
+      <div>
+        <h4>¿Quiénes somos?</h4>
+        <ul style="list-style:none; margin-top:1rem;">
+          <li><a href="SobreNosotros.html" style="color:white; text-decoration:none;">Misión y Visión</a></li>
+          <li><a href="politicas.html" style="color:white; text-decoration:none;">Políticas de la empresa y Manejo de datos personales</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>¡Contáctanos!</h4>
+        <p style="margin:1rem 0;">Número de teléfono<br>Correo electrónico<br>Ubicación</p>
+        <div class="social-links">
+          <a href="https://facebook.com" class="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com" class="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Cervasa SAS • 2026 • Todos los derechos reservados
+    </div>
+  </footer>
+
+
+</body>
+</html>

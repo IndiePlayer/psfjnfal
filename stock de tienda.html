@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stock de Tienda - Cervasa Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #003366;
+      --gray-bg: #f5f5f5;
+      --text: #333;
+      --light-gray: #e0e0e0;
+      --accent: #ff6200;
+      --success: #28a745;
+      --warning: #fd7e14;
+      --danger: #dc3545;
+      --tab-active: #003366;
+      --tab-inactive: #e0e0e0;
+      --white: #ffffff;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo-div { 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 5%;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+    }
+
+    /* Sistema de Pestañas (Tabs) */
+    .tabs {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 0;
+      overflow-x: auto;
+    }
+
+    .tab {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: var(--tab-inactive);
+      color: var(--text);
+      border: none;
+      border-radius: 12px 12px 0 0;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      background: var(--white);
+      color: var(--primary);
+      border-top: 4px solid var(--accent);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Contenedor de Tablas */
+    .tab-content {
+      background: var(--white);
+      border-radius: 0 12px 12px 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 2rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden { display: none; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    tr:hover { background: #fcfcfc; }
+
+    /* Estados de Stock */
+    .low-stock { color: var(--warning); font-weight: bold; background: #fff8f1; padding: 4px 8px; border-radius: 4px; }
+    .out-stock { color: var(--danger); font-weight: bold; background: #fff5f5; padding: 4px 8px; border-radius: 4px; }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .btn-action {
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #002850; transform: translateY(-2px); }
+
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #218838; transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .tab { padding: 0.8rem 1rem; font-size: 0.9rem; }
+      th, td { padding: 0.8rem; font-size: 0.85rem; }
+      .actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo-div">
+        <i class="fas fa-gas-pump"></i>
+        <span>Cervasa Admin</span>
+      </div>
+      <div class="nav-links">
+        <a href="admin.html">Dashboard</a>
+        <a href="liquidación.html">Gasolinera</a>
+        <a href="#" class="active">Tienda</a>
+      </div>
+      <div class="auth-links">
+        <a href="sesion.html" onclick="logoutUsuario(); return false;" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Gestión de Stock</h1>
+
+    <div class="tabs">
+      <button id="btn-ingredientes" class="tab active" onclick="openTab('ingredientes')">
+        <i class="fas fa-apple-whole"></i> Ingredientes
+      </button>
+      <button id="btn-productos" class="tab" onclick="openTab('productos')">
+        <i class="fas fa-utensils"></i> Productos (Calculado)
+      </button>
+    </div>
+
+    <div id="ingredientes" class="tab-content">
+      <table>
+        <thead>
+          <tr>
+            <th>Ingrediente</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="ingredientes-body">
+          </tbody>
+      </table>
+
+      <div class="actions">
+        <button class="btn-action btn-primary"><i class="fas fa-plus"></i> Agregar Ingrediente</button>
+        <button class="btn-action btn-success"><i class="fas fa-sync"></i> Sincronizar</button>
+      </div>
+    </div>
+
+    <div id="productos" class="tab-content hidden">
+      <table id="productos-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Stock Disp.</th>
+            <th>Unidad</th>
+            <th>Limitante</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="productos-body">
+          </tbody>
+      </table>
+
+      <div class="actions">
+        <button class="btn-action btn-primary"><i class="fas fa-plus"></i> Nueva Receta</button>
+        <button class="btn-action btn-success" onclick="calcularStockProductos()">
+          <i class="fas fa-calculator"></i> Recalcular Stock
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="utils.js"></script>
+  <script>
+    const ingredientes = [
+      { nombre: 'Pan para hamburguesa', cantidad: 320, unidad: 'unidades' },
+      { nombre: 'Pan para perro caliente', cantidad: 180, unidad: 'unidades' },
+      { nombre: 'Carne molida de res', cantidad: 12.5, unidad: 'kg' },
+      { nombre: 'Salchicha ranchera', cantidad: 8, unidad: 'kg' },
+      { nombre: 'Queso mozzarella', cantidad: 6.2, unidad: 'kg' },
+      { nombre: 'Tomate chonto', cantidad: 18, unidad: 'kg' },
+      { nombre: 'Lechuga crespa', cantidad: 4.5, unidad: 'kg' },
+      { nombre: 'Papas para fritar', cantidad: 45, unidad: 'kg' }
+    ];
+
+    const recetas = [
+      {
+        producto: 'Hamburguesa sencilla',
+        ingredientes: { 'Pan para hamburguesa': 1, 'Carne molida de res': 0.15, 'Queso mozzarella': 0.03, 'Tomate chonto': 0.08, 'Lechuga crespa': 0.04 },
+        unidad: 'unidades'
+      },
+      {
+        producto: 'Perro caliente',
+        ingredientes: { 'Pan para perro caliente': 1, 'Salchicha ranchera': 0.08, 'Tomate chonto': 0.05 },
+        unidad: 'unidades'
+      }
+    ];
+
+    function renderIngredientes() {
+      const body = document.getElementById('ingredientes-body');
+      body.innerHTML = '';
+      ingredientes.forEach(ing => {
+        let estadoClass = '';
+        let estadoText = 'Normal';
+        if(ing.cantidad < 5) { estadoClass = 'low-stock'; estadoText = 'Bajo Stock'; }
+        if(ing.cantidad === 0) { estadoClass = 'out-stock'; estadoText = 'Agotado'; }
+
+        body.innerHTML += `
+          <tr>
+            <td>${ing.nombre}</td>
+            <td>${ing.cantidad}</td>
+            <td>${ing.unidad}</td>
+            <td><span class="${estadoClass}">${estadoText}</span></td>
+          </tr>
+        `;
+      });
+    }
+
+    function calcularStockProductos() {
+      const tableBody = document.getElementById('productos-body');
+      tableBody.innerHTML = '';
+
+      recetas.forEach(receta => {
+        let minStock = Infinity;
+        let limitante = '';
+
+        for (let ing in receta.ingredientes) {
+          const req = receta.ingredientes[ing];
+          const stockIng = ingredientes.find(i => i.nombre === ing)?.cantidad || 0;
+          const posible = Math.floor(stockIng / req);
+          if (posible < minStock) {
+            minStock = posible;
+            limitante = ing;
+          }
+        }
+
+        const estadoClass = minStock < 10 ? (minStock === 0 ? 'out-stock' : 'low-stock') : '';
+        const estadoText = minStock === 0 ? 'Sin Stock' : (minStock < 10 ? 'Bajo Stock' : 'Normal');
+
+        tableBody.innerHTML += `
+          <tr>
+            <td>${receta.producto}</td>
+            <td>${minStock}</td>
+            <td>${receta.unidad}</td>
+            <td><small>${limitante}</small></td>
+            <td><span class="${estadoClass}">${estadoText}</span></td>
+          </tr>
+        `;
+      });
+    }
+
+    function openTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      
+      document.getElementById(tabName).classList.remove('hidden');
+      event.currentTarget.classList.add('active');
+
+      if (tabName === 'productos') calcularStockProductos();
+    }
+
+    window.onload = () => {
+      renderIngredientes();
+      if (typeof requiereAutenticacion === 'function') requiereAutenticacion('sesion.html');
+    };
+  </script>
+</body>
+</html>
